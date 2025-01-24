@@ -1,4 +1,4 @@
-import App from './Home';
+import App from './home';
 
 export default () => {
   return <App/>;

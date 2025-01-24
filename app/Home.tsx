@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
-import styles from './styles/HomeStyle';
+import styles from './styles/home-style';
 
 export default () => {
   return (
@@ -16,7 +16,7 @@ export default () => {
         <Text style={styles.mapPlaceholder}>Map Placeholder</Text>
       </View>
 
-      <Link href="/screens/SignUp">가입</Link>
+      <Link href="/screens/signup">가입</Link>
     </View>
   );
 }

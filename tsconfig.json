@@ -13,6 +13,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
+    "app/types/env.d.ts",
+    "app/types/react-native-secure-storage.d.ts",
     "expo-env.d.ts"
   ],
   "exclude": [

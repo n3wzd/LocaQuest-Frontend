@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text, TextInput, Button } from 'react-native';
 import { useRouter } from 'expo-router';
-import styles from '../styles/SignUpStyle';
+import axios from 'axios';
+import { API_URL } from '@env';
+import styles from '../styles/signup-style';
 
 interface FormData {
-  userId: string;
   name: string;
   email: string;
+  phone: string;
   password: string;
   confirmPassword: string;
 }
 
-export default ({ navigation }: { navigation: any }) => {
+export default () => {
   const {
     register,
     handleSubmit,
@@ -24,21 +26,26 @@ export default ({ navigation }: { navigation: any }) => {
   const router = useRouter();
 
   const onSubmit = (data: FormData) => {
-    setSuccessMessage('회원가입이 완료되었습니다!');
-    setTimeout(() => router.push('/'), 2000);
+    axios
+      .post(API_URL + "/api/users/register", {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: data.password
+      })
+      .then((response) => {
+        setSuccessMessage('회원가입이 완료되었습니다!');
+        setTimeout(() => router.push('/'), 2000);
+      })
+      .catch((error) => {
+        setSuccessMessage('가입 실패! 나중에 다시 시도해주세요.');
+        console.error('Error:', error);
+      });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome To LocaQuest!</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="아이디 입력"
-        onChangeText={(text) => setValue('userId', text)}
-        {...register('userId', { required: '아이디를 입력해주세요.', minLength: 3, maxLength: 50 })}
-      />
-      {errors.userId && <Text style={styles.error}>{errors.userId.message}</Text>}
 
       <TextInput
         style={styles.input}

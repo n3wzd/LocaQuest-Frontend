@@ -5,10 +5,10 @@ import { useRouter } from 'expo-router';
 import axios from 'axios';
 import { API_URL } from '@env';
 import styles from '../styles/signup-style';
+import tokenManager from '../utils/token-manager';
 
 interface FormData {
   name: string;
-  email: string;
   password: string;
   confirmPassword: string;
 }
@@ -25,16 +25,17 @@ export default () => {
 
   const onSubmit = (data: FormData) => {
     axios
-      .post(API_URL + "/users/register/send-auth-mail", {
+      .post(API_URL + "/users/update", {
         name: data.name,
-        email: data.email,
         password: data.password
+      }, {
+        headers: {
+          Authorization: `Bearer ${tokenManager.getToken()}`,
+        },
       })
       .then((response) => {
-        router.push({
-          pathname: '/screens/signup-verify',
-          params: { email: data.email },
-        });
+        Alert.alert('', "수정되었습니다!");
+        router.push('/');
       })
       .catch((error) => {
         Alert.alert('', error.response.data);
@@ -43,23 +44,7 @@ export default () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome To LocaQuest!</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="이메일 입력"
-        keyboardType="email-address"
-        onChangeText={(text) => setValue('email', text)}
-        {...register('email', {
-          required: '이메일을 입력해주세요.',
-          maxLength: 320,
-          pattern: {
-            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            message: '이메일 형식이 올바르지 않습니다.',
-          },
-        })}
-      />
-      {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
+      <Text style={styles.title}>개인정보 수정</Text>
 
       <TextInput
         style={styles.input}
@@ -100,7 +85,7 @@ export default () => {
       />
       {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
 
-      <Button title="가입" onPress={handleSubmit(onSubmit)} />
+      <Button title="수정" onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };

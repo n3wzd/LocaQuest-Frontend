@@ -17,6 +17,10 @@ export default () => {
       </View>
 
       <Link href="/screens/signup">가입</Link>
+      <Link href="/screens/login">로그인</Link>
+      <Link href="/screens/find-password">비밀번호 찾기</Link>
+      <Link href="/screens/user-update">개인정보 수정</Link>
+      <Link href="/screens/user-delete">탈퇴</Link>
     </View>
   );
 }

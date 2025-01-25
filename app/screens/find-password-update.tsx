@@ -1,14 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import axios from 'axios';
 import { API_URL } from '@env';
 import styles from '../styles/signup-style';
 
 interface FormData {
-  name: string;
-  email: string;
   password: string;
   confirmPassword: string;
 }
@@ -22,19 +20,17 @@ export default () => {
     formState: { errors },
   } = useForm<FormData>();
   const router = useRouter();
+  const { email } = useLocalSearchParams();
 
   const onSubmit = (data: FormData) => {
     axios
-      .post(API_URL + "/users/register/send-auth-mail", {
-        name: data.name,
-        email: data.email,
+      .post(API_URL + "/users/update", {
+        email: email,
         password: data.password
       })
       .then((response) => {
-        router.push({
-          pathname: '/screens/signup-verify',
-          params: { email: data.email },
-        });
+        Alert.alert('', "수정되었습니다!");
+        router.push('/');
       })
       .catch((error) => {
         Alert.alert('', error.response.data);
@@ -43,23 +39,7 @@ export default () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome To LocaQuest!</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="이메일 입력"
-        keyboardType="email-address"
-        onChangeText={(text) => setValue('email', text)}
-        {...register('email', {
-          required: '이메일을 입력해주세요.',
-          maxLength: 320,
-          pattern: {
-            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            message: '이메일 형식이 올바르지 않습니다.',
-          },
-        })}
-      />
-      {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
+      <Text style={styles.title}>비밀번호 변경</Text>
 
       <TextInput
         style={styles.input}
@@ -91,14 +71,6 @@ export default () => {
       {errors.confirmPassword && (
         <Text style={styles.error}>{errors.confirmPassword.message}</Text>
       )}
-
-      <TextInput
-        style={styles.input}
-        placeholder="이름 입력"
-        onChangeText={(text) => setValue('name', text)}
-        {...register('name', { required: '이름을 입력해주세요.', minLength: 2, maxLength: 100 })}
-      />
-      {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
 
       <Button title="가입" onPress={handleSubmit(onSubmit)} />
     </View>

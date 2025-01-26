@@ -1,10 +1,10 @@
-import SecureStorage from 'react-native-secure-storage';
+import * as SecureStore from 'expo-secure-store';
 
-const storangeKey = 'user_token';
+const storageKey = 'user_token';
 
 const saveToken = async (token: string) => {
   try {
-    await SecureStorage.setItem(storangeKey, token);
+    await SecureStore.setItemAsync(storageKey, token);
   } catch (e) {
     console.error('Failed to save token:', e);
   }
@@ -12,7 +12,7 @@ const saveToken = async (token: string) => {
 
 const getToken = async () => {
   try {
-    const token = await SecureStorage.getItem(storangeKey);
+    const token = await SecureStore.getItemAsync(storageKey);
     return token;
   } catch (e) {
     console.error('Failed to get token:', e);
@@ -21,7 +21,7 @@ const getToken = async () => {
 
 const removeToken = async () => {
   try {
-    await SecureStorage.removeItem(storangeKey);
+    await SecureStore.deleteItemAsync(storageKey);
   } catch (e) {
     console.error('Failed to remove token:', e);
   }

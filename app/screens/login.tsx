@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from 'axios';
-import { API_URL } from '@env';
+import axios from '../utils/axios-manager';
 import tokenManager from '../utils/token-manager';
 import styles from '../styles/login-style';
+import LoadingButton from '../components/loading-button';
+import EmailInput from '../components/email-input';
+import PasswordInput from '../components/password-input';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,12 +18,11 @@ export default function LoginPage() {
       Alert.alert('', '이메일 또는 비밀번호를 입력해주세요.');
       return;
     }
-
-    axios
-      .post(API_URL + "/users/login", {
-        email: email,
-        password: password
-      })
+    const dto = {
+      email: email,
+      password: password
+    };
+    await axios.post("/users/login", dto, false)
       .then(async (response) => {
         await tokenManager.saveToken(response.data);
         router.push('/');
@@ -35,24 +36,9 @@ export default function LoginPage() {
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
 
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        style={styles.input}
-        secureTextEntry
-      />
-
-      <Button title="Login" onPress={handleLogin} />
+      <EmailInput value={email} onChangeText={setEmail} />
+      <PasswordInput value={password} onChangeText={setPassword} />
+      <LoadingButton title="Login" onPress={handleLogin} />
 
       <Text
         style={styles.signupLink}

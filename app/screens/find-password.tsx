@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from 'axios';
-import { API_URL } from '@env';
+import axios from '../utils/axios-manager';
 import styles from '../styles/login-style';
+import EmailInput from '../components/email-input';
+import LoadingButton from '../components/loading-button';
 
 export default function FindIdPage() {
   const [email, setEmail] = useState('');
@@ -11,14 +12,13 @@ export default function FindIdPage() {
 
   const handleFindId = async () => {
     if (!email) {
-      Alert.alert('Error', '이메일을 입력해주세요.');
+      Alert.alert('', '이메일을 입력해주세요.');
       return;
     }
-    axios
-      .post(API_URL + "/users/update-password/send-auth-email", email)
+    await axios.post("/users/update-password/send-auth-email", {email: email}, false)
       .then((response) => {
         router.push({
-          pathname: '/screens/signup-verify',
+          pathname: '/screens/find-password-verify',
           params: { email: email },
         });
       })
@@ -30,24 +30,8 @@ export default function FindIdPage() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>비밀번호 찾기</Text>
-
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-
-      <Button title="확인" onPress={handleFindId} />
-
-      <Text
-        style={styles.signupLink}
-        onPress={() => router.push('/screens/find-password-verify')}
-      >
-        Back to Login
-      </Text>
+      <EmailInput value={email} onChangeText={setEmail} />
+      <LoadingButton title="확인" onPress={handleFindId} />
     </View>
   );
 }

@@ -3,10 +3,10 @@ import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from '../utils/axios-manager';
 import tokenManager from '../utils/token-manager';
-import styles from '../styles/login-style';
-import LoadingButton from '../components/loading-button';
-import EmailInput from '../components/email-input';
-import PasswordInput from '../components/password-input';
+import styles from '../styles/form-style';
+import LoadingButton from '../components/input/loading-button';
+import EmailInput from '../components/input/email-input';
+import PasswordInput from '../components/input/password-input';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ export default function LoginPage() {
     await axios.post("/users/login", dto, false)
       .then(async (response) => {
         await tokenManager.saveToken(response.data);
-        router.push('/');
+        router.push('/(tabs)/index');
       })
       .catch((error) => {
         Alert.alert('', error.response.data);
@@ -41,7 +41,6 @@ export default function LoginPage() {
       <LoadingButton title="Login" onPress={handleLogin} />
 
       <Text
-        style={styles.signupLink}
         onPress={() => router.push('/screens/signup')}
       >
         Don't have an account? Sign up

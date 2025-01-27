@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from '../utils/axios-manager';
-import styles from '../styles/signup-style';
+import styles from '../styles/form-style';
 import EmailInput from '../components/form/email-input';
 import PasswordInput from '../components/form/password-input';
 import NameInput from '../components/form/name-input';
-import LoadingButton from '../components/loading-button';
+import LoadingButton from '../components/input/loading-button';
 
 interface FormData {
   name: string;

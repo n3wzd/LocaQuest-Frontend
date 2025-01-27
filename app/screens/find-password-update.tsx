@@ -4,8 +4,8 @@ import { View, Text, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import axios from '../utils/axios-manager';
 import PasswordInput from '../components/form/password-input';
-import LoadingButton from '../components/loading-button';
-import styles from '../styles/signup-style';
+import LoadingButton from '../components/input/loading-button';
+import styles from '../styles/form-style';
 
 interface FormData {
   password: string;
@@ -30,7 +30,7 @@ export default () => {
     await axios.post("/users/update-password", dto, false)
       .then((response) => {
         Alert.alert('', "수정되었습니다!");
-        router.push('/');
+        router.push('/(tabs)/index');
       })
       .catch((error) => {
         Alert.alert('', error.response.data);

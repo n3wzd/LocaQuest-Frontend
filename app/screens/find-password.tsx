@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from '../utils/axios-manager';
-import styles from '../styles/login-style';
-import EmailInput from '../components/email-input';
-import LoadingButton from '../components/loading-button';
+import styles from '../styles/form-style';
+import EmailInput from '../components/input/email-input';
+import LoadingButton from '../components/input/loading-button';
 
 export default function FindIdPage() {
   const [email, setEmail] = useState('');

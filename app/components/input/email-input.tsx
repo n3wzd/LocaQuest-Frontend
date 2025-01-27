@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import styles from '../styles/login-style';
+import styles from '../../styles/form-style';
 
 interface EmailInputProps {
   value: string;

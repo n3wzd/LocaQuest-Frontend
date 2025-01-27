@@ -3,7 +3,7 @@ import { View, Text, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import axios from '../utils/axios-manager';
 import tokenManager from '../utils/token-manager';
-import LoadingButton from '../components/loading-button';
+import LoadingButton from '../components/input/loading-button';
 
 export default () => {
   const router = useRouter();
@@ -13,7 +13,7 @@ export default () => {
     await axios.post("/users/register/check-verified", {email: email}, false)
       .then(async (response) => {
         await tokenManager.saveToken(response.data);
-        router.push('/');
+        router.push('/(tabs)/index');
       })
       .catch((error) => {
         Alert.alert("", error.response.data);

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from '../utils/axios-manager';
-import styles from '../styles/signup-style';
-import LoadingButton from '../components/loading-button';
+import styles from '../styles/form-style';
+import LoadingButton from '../components/input/loading-button';
 import tokenManager from '../utils/token-manager';
-import PasswordInput from '../components/password-input';
+import PasswordInput from '../components/input/password-input';
 
 export default () => {
   const [password, setPassword] = useState('');
@@ -16,7 +16,7 @@ export default () => {
       .then(async (response) => {
         Alert.alert('', "탈퇴 완료!");
         await tokenManager.removeToken();
-        router.push('/');
+        router.push('/(tabs)/index');
       })
       .catch((error) => {
         Alert.alert('', error.response.data);

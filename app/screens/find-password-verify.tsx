@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import axios from '../utils/axios-manager';
-import LoadingButton from '../components/loading-button';
+import LoadingButton from '../components/input/loading-button';
 
 export default () => {
   const router = useRouter();

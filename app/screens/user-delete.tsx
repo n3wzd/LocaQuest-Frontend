@@ -16,10 +16,10 @@ export default () => {
       .then(async (response) => {
         Alert.alert('', "탈퇴 완료!");
         await tokenManager.removeToken();
-        router.push('/(tabs)/index');
+        router.push('/');
       })
       .catch((error) => {
-        Alert.alert('', error.response.data);
+        axios.handleError(error, router);
       });
   };
 

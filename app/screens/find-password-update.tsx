@@ -30,10 +30,10 @@ export default () => {
     await axios.post("/users/update-password", dto, false)
       .then((response) => {
         Alert.alert('', "수정되었습니다!");
-        router.push('/(tabs)/index');
+        router.push('/');
       })
       .catch((error) => {
-        Alert.alert('', error.response.data);
+        axios.handleError(error, router);
       });
   };
 

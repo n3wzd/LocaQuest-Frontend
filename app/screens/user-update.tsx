@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from '../utils/axios-manager';
 import styles from '../styles/form-style';
@@ -31,10 +31,10 @@ export default () => {
     await axios.post("/users/update", dto, true)
       .then((response) => {
         Alert.alert('', "수정되었습니다!");
-        router.push('/(tabs)/index');
+        router.push('/(tabs)/setting');
       })
       .catch((error) => {
-        Alert.alert('', error.response.data);
+        axios.handleError(error, router);
       });
   };
 

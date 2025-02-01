@@ -39,7 +39,7 @@ export default () => {
         });
       })
       .catch((error) => {
-        Alert.alert('', error.response.data);
+        axios.handleError(error, router);
       });
   };
 

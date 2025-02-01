@@ -13,10 +13,10 @@ export default () => {
     await axios.post("/users/register/check-verified", {email: email}, false)
       .then(async (response) => {
         await tokenManager.saveToken(response.data);
-        router.push('/(tabs)/index');
+        router.push('/');
       })
       .catch((error) => {
-        Alert.alert("", error.response.data);
+        axios.handleError(error, router);
       });
   };
 

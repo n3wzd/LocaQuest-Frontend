@@ -5,7 +5,7 @@ export default function TabLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="index"
+        name="quest"
         options={{
           title: 'Quest',
           tabBarIcon: ({ color, size }) => (

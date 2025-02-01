@@ -25,10 +25,10 @@ export default function LoginPage() {
     await axios.post("/users/login", dto, false)
       .then(async (response) => {
         await tokenManager.saveToken(response.data);
-        router.push('/(tabs)/index');
+        router.push('/(tabs)/quest');
       })
       .catch((error) => {
-        Alert.alert('', error.response.data);
+        axios.handleError(error, router);
       });
   };
 
@@ -43,7 +43,7 @@ export default function LoginPage() {
       <Text
         onPress={() => router.push('/screens/signup')}
       >
-        Don't have an account? Sign up
+        Sign up
       </Text>
     </View>
   );

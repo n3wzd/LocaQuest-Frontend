@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
+import tokenManager from '../utils/token-manager';
 import axios from '../utils/axios-manager';
 import styles from '../styles/form-style';
 import PasswordInput from '../components/form/password-input';
@@ -29,7 +30,8 @@ export default () => {
       password: data.password
     }
     await axios.post("/users/update", dto, true)
-      .then((response) => {
+      .then(async (response) => {
+        await tokenManager.saveToken(response.data);
         Alert.alert('', "수정되었습니다!");
         router.push('/(tabs)/setting');
       })

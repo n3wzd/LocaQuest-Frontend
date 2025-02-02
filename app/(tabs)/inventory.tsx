@@ -1,8 +1,16 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Button } from 'react-native';
 import styles from '../styles/home-style';
+import tokenManager from '../utils/token-manager';
+import { useRouter } from 'expo-router';
 
 export default () => {
+  const router = useRouter();
+  const handleLogout = async () => {
+    await tokenManager.removeToken();
+    router.push('/');
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -13,6 +21,7 @@ export default () => {
 
       <View style={styles.mapContainer}>
         <Text style={styles.menuText}>Inventory Placeholder</Text>
+        <Button title="로그아웃" onPress={handleLogout} />
       </View>
     </View>
   );

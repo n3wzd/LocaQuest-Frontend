@@ -6,6 +6,7 @@ import InfoBlock from '../components/user/info-block';
 import BadgesList from '../components/user/badge-list';
 import OngoingChallengesList from '../components/user/achievement-ongoing-list';
 import axios from '../utils/axios-manager';
+import tokenManager from '../utils/token-manager';
 import { useRouter } from 'expo-router';
 import { Asset } from 'expo-asset';
 
@@ -19,15 +20,18 @@ interface UserStatus {
       achvId: number;
       name: string;
       desc: string;
+      progress: number;
   } [];
 }
 
 const ProfileScreen = () => {
   const [data, setData] = useState<UserStatus | null>(null);
+  const [userName, setUserName] = useState<string>("");
   const router = useRouter();
-  const image = Asset.fromModule(require('../../assets/achievements/1.png')).uri;
+  const userImage = Asset.fromModule(require('../../assets/achievements/1.png')).uri;
   useEffect(() => {
     const init = async () => {
+      setUserName(await tokenManager.getName());
       axios.post("/user-status/", {}, true)
         .then(async (response) => {
           setData(response.data);
@@ -42,26 +46,17 @@ const ProfileScreen = () => {
   return (
     data !== null ? (
       <ScrollView contentContainerStyle={styles.container}>
-        <Profile name="John Doe" imageUri={image} />
+        <Profile name={userName} imageUri={userImage} />
         <Level level={5} currentExperience={data.userStatistic.totalExperience} nextExperience={12} />
         <View style={styles.infoBlockContainer}>
           <InfoBlock title="걸음수" value={data.userStatistic.totalSteps} />
           <InfoBlock title="이동거리" value={data.userStatistic.totalDistance + "m"} />
         </View>
-        <BadgesList badges={[{ id: 1, image: 'https://example.com/badge.jpg' }]} />
-        <OngoingChallengesList
-          challenges={[
-            {
-              badge: 'https://example.com/badge.jpg',
-              name: '첫 번째 도전',
-              condition: '걸음수 10,000 이상',
-              progress: 50,
-            },
-          ]}
-        />
+        <BadgesList badges={ data.achievementList.filter(achv => achv.progress === 100) } />
+        <OngoingChallengesList challenges={data.achievementList.filter(achv => achv.progress < 100)}/>
       </ScrollView>
     ) : (
-      <View></View>
+      <View/>
     )
   );
 };

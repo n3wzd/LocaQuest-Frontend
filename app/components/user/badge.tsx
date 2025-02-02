@@ -1,10 +1,12 @@
 import React from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { Asset } from 'expo-asset';
+import imagePaths from '../../utils/image-paths';
 
-const Badge = ({ imageUri, onPress }: { imageUri: string; onPress: () => void }) => {
+const Badge = ({ achvId, onPress }: { achvId: number; onPress: () => void }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.badge}>
-      <Image source={{ uri: imageUri }} style={styles.badgeImage} />
+      <Image source={{ uri: Asset.fromModule(imagePaths[achvId]).uri }} style={styles.badgeImage} />
     </TouchableOpacity>
   );
 };

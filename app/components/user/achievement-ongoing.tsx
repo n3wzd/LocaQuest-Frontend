@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { Asset } from 'expo-asset';
+import imagePaths from '../../utils/image-paths';
 
-const AchievementOngoing = ({ badge, name, condition, progress }: { badge: string; name: string; condition: string; progress: number }) => {
+const AchievementOngoing = ({ achvId, name, desc, progress }: { achvId: number; name: string; desc: string; progress: number }) => {
   return (
     <View style={styles.challengeBlock}>
-      <Image source={{ uri: badge }} style={styles.challengeBadge} />
+      <Image source={{ uri: Asset.fromModule(imagePaths[achvId]).uri }} style={styles.challengeBadge} />
       <View style={styles.challengeDetails}>
         <Text style={styles.challengeName}>{name}</Text>
-        <Text style={styles.challengeCondition}>{condition}</Text>
+        <Text style={styles.challengeDesc}>{desc}</Text>
         <Text style={styles.challengeProgress}>{progress}% 완료</Text>
       </View>
     </View>
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  challengeCondition: {
+  challengeDesc: {
     fontSize: 14,
     color: '#555',
   },

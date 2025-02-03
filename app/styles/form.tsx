@@ -1,19 +1,20 @@
 import { StyleSheet } from 'react-native';
+import common from './common';
+import theme from './theme';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
+    ...common.container
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+   ...common.title
+  },
+  text: {
+    ...common.text
   },
   input: {
     height: 50,
-    borderColor: '#ccc',
+    borderColor: theme.colors.lightWine,
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
@@ -21,21 +22,17 @@ export default StyleSheet.create({
   },
   signupLink: {
     marginTop: 20,
-    color: 'blue',
+    color: theme.colors.darkWine,
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: theme.colors.lightWine,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   disabledButton: {
-    backgroundColor: '#A9A9A9',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 16,
+    backgroundColor: theme.colors.disable,
   },
 });

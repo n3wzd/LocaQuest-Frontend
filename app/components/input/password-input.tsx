@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import styles from '../../styles/form-style';
+import styles from '../../styles/form';
 
 interface PasswordInputProps {
   value: string;

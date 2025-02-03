@@ -5,7 +5,7 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import axios from '../utils/axios-manager';
 import PasswordInput from '../components/form/password-input';
 import LoadingButton from '../components/input/loading-button';
-import styles from '../styles/form-style';
+import styles from '../styles/form';
 
 interface FormData {
   password: string;

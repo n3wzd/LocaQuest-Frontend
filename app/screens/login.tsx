@@ -3,7 +3,7 @@ import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from '../utils/axios-manager';
 import tokenManager from '../utils/token-manager';
-import styles from '../styles/form-style';
+import styles from '../styles/form';
 import LoadingButton from '../components/input/loading-button';
 import EmailInput from '../components/input/email-input';
 import PasswordInput from '../components/input/password-input';

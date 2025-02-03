@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-import styles from '../../styles/form-style';
+import styles from '../../styles/form';
 
 interface LoadingButtonProps {
   onPress: () => Promise<void>;

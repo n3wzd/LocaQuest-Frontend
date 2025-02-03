@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from '../utils/axios-manager';
-import styles from '../styles/form-style';
+import styles from '../styles/form';
 import EmailInput from '../components/input/email-input';
 import LoadingButton from '../components/input/loading-button';
 

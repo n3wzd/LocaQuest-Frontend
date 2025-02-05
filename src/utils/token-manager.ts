@@ -2,11 +2,11 @@ import * as SecureStore from 'expo-secure-store';
 import { jwtDecode } from 'jwt-decode';
 import UserData from '../types/user-data';
 
-const storageKey = 'user_token';
+const STORAGE_TOKEN_KEY = 'user_token';
 
 const saveToken = async (token: string) => {
   try {
-    await SecureStore.setItemAsync(storageKey, token);
+    await SecureStore.setItemAsync(STORAGE_TOKEN_KEY, token);
   } catch (e) {
     console.error('Failed to save token:', e);
   }
@@ -14,7 +14,7 @@ const saveToken = async (token: string) => {
 
 const getToken = async () => {
   try {
-    const token = await SecureStore.getItemAsync(storageKey);
+    const token = await SecureStore.getItemAsync(STORAGE_TOKEN_KEY);
     return token;
   } catch (e) {
     console.error('Failed to get token:', e);
@@ -24,7 +24,7 @@ const getToken = async () => {
 
 const removeToken = async () => {
   try {
-    await SecureStore.deleteItemAsync(storageKey);
+    await SecureStore.deleteItemAsync(STORAGE_TOKEN_KEY);
   } catch (e) {
     console.error('Failed to remove token:', e);
   }

@@ -4,15 +4,12 @@ import theme from './theme';
 export default StyleSheet.create({
     screen: {
         backgroundColor: theme.colors.darkSpace,
-        padding: 15,
+        flex: 1,
     },
     container: {
         padding: 15,
         borderRadius: 10,
-        shadowColor: theme.colors.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
+        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
     },
     rowContainer: {
         flexDirection: 'row',

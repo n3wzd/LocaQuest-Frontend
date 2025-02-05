@@ -27,20 +27,22 @@ const ProfileScreen = () => {
 
   return (
     userStatus !== null ? (
-      <ScrollView contentContainerStyle={styles.screen}>
-        <Profile name={userName} imageUri={userImage} />
-        <Level level={userStatus.level} exp={userStatus.exp} />
-        <View style={{ marginBottom: 20 }}>
-          <InfoBlockContainer steps={userStatus.steps} distance={userStatus.distance}/>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.boldText}>달성한 업적</Text>
-          <Link href="../screens/achievement-catalog"><Text style={styles.text}>더보기</Text></Link>
-        </View>
-        <BadgesList badges={ userStatus.achievementList.filter(achv => achv.progress === 100) } />
-        <Text style={styles.boldText}>진행 중인 업적</Text>
-        <AchievementList achievements={userStatus.achievementList.filter(achv => achv.progress < 100).sort((a, b) => b.progress - a.progress).slice(0, 3)}/>
-      </ScrollView>
+      <View style={styles.screen}>
+        <ScrollView contentContainerStyle={{ padding: 15 }}>
+          <Profile name={userName} imageUri={userImage} />
+          <Level level={userStatus.level} exp={userStatus.exp} />
+          <View style={{ marginBottom: 20 }}>
+            <InfoBlockContainer steps={userStatus.steps} distance={userStatus.distance}/>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.boldText}>달성한 업적</Text>
+            <Link href="../screens/achievement-catalog"><Text style={styles.text}>더보기</Text></Link>
+          </View>
+          <BadgesList badges={ userStatus.achievementList.filter(achv => achv.progress === 100) } />
+          <Text style={styles.boldText}>진행 중인 업적</Text>
+          <AchievementList achievements={userStatus.achievementList.filter(achv => achv.progress < 100).sort((a, b) => b.progress - a.progress).slice(0, 3)}/>
+        </ScrollView>
+      </View>
     ) : (
       <View/>
     )

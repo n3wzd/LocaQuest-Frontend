@@ -12,8 +12,6 @@ const Level = ({ level, exp }: { level: number; exp: number; }) => {
   if(staticData) {
     const expLimit = staticData.expLimitList[level];
     const expLimitNext = staticData.expLimitList[level + 1];
-    console.log(expLimit);
-    console.log(expLimitNext);
     gauge = level === staticData.maxLevel ? 100 : 
         (expLimit < expLimitNext ? ((exp - expLimit) / (expLimitNext - expLimit)) * 100 : 0);
     expNextTo = expLimitNext;

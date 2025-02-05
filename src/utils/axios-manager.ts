@@ -26,7 +26,7 @@ const handleError = (error: AxiosError, router: Router) => {
             Alert.alert('', '다시 로그인해주세요.');
             router.push('/');
         } else if(statusCode === 403) {
-            Alert.alert('', '권한이 없습니다.');
+            Alert.alert('', '잘못된 접근입니다.');
         } else {
         const msg = error.response.data;
             if (typeof msg === "string") {

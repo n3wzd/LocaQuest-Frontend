@@ -13,7 +13,7 @@ export default ({ achievement }: { achievement: Achievement }) => {
       <View style={{ flex: 1 }}>
         <Text style={styles.text}>{achievement.name}</Text>
         <Text style={styles.subText}>{achievement.desc}</Text>
-        <Text style={{ ...styles.text, color: theme.colors.lightGrey }}>{achievement.progress}% 완료</Text>
+        <Text style={styles.subText}>{achievement.progress}% 완료</Text>
       </View>
     </View>
   );

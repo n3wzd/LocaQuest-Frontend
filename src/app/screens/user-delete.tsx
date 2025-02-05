@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from '../utils/axios-manager';
-import styles from '../styles/form';
-import LoadingButton from '../components/input/loading-button';
-import tokenManager from '../utils/token-manager';
-import PasswordInput from '../components/input/password-input';
+import axios from '../../utils/axios-manager';
+import styles from '../../styles/form';
+import LoadingButton from '../../components/input/loading-button';
+import tokenManager from '../../utils/token-manager';
+import PasswordInput from '../../components/input/password-input';
 
 export default () => {
   const [password, setPassword] = useState('');

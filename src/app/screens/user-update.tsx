@@ -2,16 +2,15 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from '../utils/axios-manager';
-import styles from '../styles/form';
-import EmailInput from '../components/form/email-input';
-import PasswordInput from '../components/form/password-input';
-import NameInput from '../components/form/name-input';
-import LoadingButton from '../components/input/loading-button';
+import tokenManager from '../../utils/token-manager';
+import axios from '../../utils/axios-manager';
+import styles from '../../styles/form';
+import PasswordInput from '../../components/form/password-input';
+import NameInput from '../../components/form/name-input';
+import LoadingButton from '../../components/input/loading-button';
 
 interface FormData {
   name: string;
-  email: string;
   password: string;
   confirmPassword: string;
 }
@@ -28,15 +27,13 @@ export default () => {
   const onSubmit = async (data: FormData) => {
     const dto = {
       name: data.name,
-      email: data.email,
       password: data.password
     }
-    await axios.post("/users/register/send-auth-mail", dto, false)
-      .then((response) => {
-        router.push({
-          pathname: '/screens/signup-verify',
-          params: { email: data.email },
-        });
+    await axios.post("/users/update", dto, true)
+      .then(async (response) => {
+        await tokenManager.saveToken(response.data);
+        Alert.alert('', "수정되었습니다!");
+        router.push('/(tabs)/status');
       })
       .catch((error) => {
         axios.handleError(error, router);
@@ -45,13 +42,12 @@ export default () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome To LocaQuest!</Text>
+      <Text style={styles.title}>회원정보 수정</Text>
 
-      <EmailInput control={control} errors={errors}/>
       <PasswordInput control={control} errors={errors} watch={watch}/>
       <NameInput control={control} errors={errors}/>
 
-      <LoadingButton title="가입" onPress={handleSubmit(onSubmit)} />
+      <LoadingButton title="수정" onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };

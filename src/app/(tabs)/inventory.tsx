@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Button } from 'react-native';
-import styles from '../styles/home';
-import tokenManager from '../utils/token-manager';
+import styles from '../../styles/home';
+import tokenManager from '../../utils/token-manager';
 import { useRouter } from 'expo-router';
 
 export default () => {

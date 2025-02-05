@@ -6,6 +6,8 @@ import { Achievement } from '../../types/user-status';
 import ProgressBar from './progress-bar';
 import styles from '../../styles/common';
 import theme from '../../styles/theme';
+import Formater from '../../utils/string-formater';
+
 
 export default ({ achievement }: { achievement: Achievement }) => {
   return (
@@ -18,6 +20,7 @@ export default ({ achievement }: { achievement: Achievement }) => {
       {achievement.progress === 100 ? (
         <View style={{alignItems: 'center'}}>
           <Text style={{ ...styles.boldText, color: theme.colors.lightWine }}>완료!</Text>
+          <Text style={ styles.subText }>{ Formater.formatDate(achievement.achievedAt) } 달성</Text>
         </View>
       ) : (
         <ProgressBar gauge={achievement.progress} />

@@ -2,10 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import axios from '../utils/axios-manager';
-import PasswordInput from '../components/form/password-input';
-import LoadingButton from '../components/input/loading-button';
-import styles from '../styles/form';
+import axios from '../../utils/axios-manager';
+import PasswordInput from '../../components/form/password-input';
+import LoadingButton from '../../components/input/loading-button';
+import styles from '../../styles/form';
 
 interface FormData {
   password: string;

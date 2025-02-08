@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from '../../utils/axios-manager';
+import axios from '../../utils/axios';
 import styles from '../../styles/form';
 import EmailInput from '../../components/form/email-input';
 import PasswordInput from '../../components/form/password-input';

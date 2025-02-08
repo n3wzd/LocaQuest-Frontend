@@ -1,23 +1,45 @@
 import axios, { AxiosError } from 'axios';
-import tokenManager from './token-manager';
+import tokenManager from './token';
 import { Alert } from 'react-native';
 import { Router } from 'expo-router';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASE_URL = [
+    process.env.EXPO_PUBLIC_API_SERVER_CORE_URL,
+    process.env.EXPO_PUBLIC_API_SERVER_ACTIVITY_URL
+];
+
+enum ServerType {
+    CORE,
+    ACTIVITY,
+}
+
+const makeUrl = ( baseUrlType: ServerType, detailUrl: string ) => {
+    return API_BASE_URL[baseUrlType] + detailUrl;
+}
 
 const get = async (
     url: string, 
     params: Record<string, any> = {}, 
     useToken: boolean = false, 
+    serverType = ServerType.CORE,
 ) => axios
-    .get(API_URL + url, { params: params, headers: useToken ? { Authorization: `Bearer ${await tokenManager.getToken()}` } : undefined })
+    .get(makeUrl(serverType, url), 
+        { params: params, headers: useToken ? 
+            { Authorization: `Bearer ${await tokenManager.getToken()}` }
+            : undefined
+        })
 
 const post = async (
     url: string, 
     body: Record<string, any> = {}, 
     useToken: boolean = false, 
+    serverType = ServerType.CORE,
 ) => axios
-    .post(API_URL + url, body, { headers: useToken ? { Authorization: `Bearer ${await tokenManager.getToken()}` } : undefined })
+    .post(makeUrl(serverType, url), body,
+        { headers: useToken ? 
+            { Authorization: `Bearer ${await tokenManager.getToken()}` } 
+            : undefined 
+        })
 
 const handleError = (error: AxiosError, router: Router) => {
     if(error.response) {
@@ -40,4 +62,5 @@ export default {
     get: get,
     post: post,
     handleError: handleError,
+    ServerType: ServerType
 };

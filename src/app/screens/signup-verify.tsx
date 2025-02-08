@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import axios from '../../utils/axios-manager';
-import tokenManager from '../../utils/token-manager';
+import axios from '../../utils/axios';
+import tokenManager from '../../utils/token';
 import LoadingButton from '../../components/input/loading-button';
 
 export default () => {

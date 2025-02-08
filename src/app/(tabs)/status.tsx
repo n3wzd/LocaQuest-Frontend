@@ -4,7 +4,7 @@ import Profile from '../../components/status/profile';
 import Level from '../../components/status/level';
 import BadgesList from '../../components/status/badge-list';
 import AchievementList from '../../components/status/achievement-list';
-import tokenManager from '../../utils/token-manager';
+import tokenManager from '../../utils/token';
 import useUserStatusStore from '../../stores/user-status';
 import styles from '../../styles/common';
 import { Link, useRouter } from 'expo-router';

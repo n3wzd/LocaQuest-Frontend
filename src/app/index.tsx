@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import Login from './screens/login';
-import tokenManager from '../utils/token-manager';
-import { startBackgroundLocation } from '../utils/location-manager';
+import tokenManager from '../utils/token';
+import { startBackgroundLocation } from '../utils/location';
 import { useRouter } from 'expo-router';
 import useStaticDataStore from '../stores/static-data';
 import LoadingButton from '../components/input/loading-button';

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { UserStatus } from '../types/user-status';
-import axios from '../utils/axios-manager';
+import axios from '../utils/axios';
 import { Router } from 'expo-router';
 
 interface UserStatusStore {

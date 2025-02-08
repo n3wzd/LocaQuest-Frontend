@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from '../../utils/axios-manager';
-import tokenManager from '../../utils/token-manager';
+import axios from '../../utils/axios';
+import tokenManager from '../../utils/token';
 import styles from '../../styles/form';
 import LoadingButton from '../../components/input/loading-button';
 import EmailInput from '../../components/input/email-input';

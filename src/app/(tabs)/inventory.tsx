@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Button } from 'react-native';
-import styles from '../../styles/home';
-import tokenManager from '../../utils/token-manager';
+import styles from '../../styles/common';
+import tokenManager from '../../utils/token';
 import { useRouter } from 'expo-router';
 
 export default () => {
@@ -12,15 +12,14 @@ export default () => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View style={styles.screen}>
+      <View>
         <TouchableOpacity style={styles.container}>
-          <Text style={styles.menuText}>☰</Text>
+          <Text>☰</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={styles.mapContainer}>
-        <Text style={styles.menuText}>Inventory Placeholder</Text>
+      <View style={styles.container}>
+        <Text style={styles.text}>Inventory Placeholder</Text>
         <Button title="로그아웃" onPress={handleLogout} />
       </View>
     </View>

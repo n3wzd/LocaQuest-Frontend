@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import Badge from './badge';
-import styles from '../../styles/common';
+import styles from '@/src/styles/common';
 
 export default ({ badges }: { badges: { achvId: number }[] }) => {
   return (

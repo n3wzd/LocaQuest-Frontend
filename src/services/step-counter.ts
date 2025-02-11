@@ -1,5 +1,5 @@
 import { Accelerometer, AccelerometerMeasurement } from 'expo-sensors';
-import axios from './axios';
+import { countStep } from '../api/user-status';
 
 const ACC_THRESHOLD_MIN = 1.5;
 const ACC_THRESHOLD_MAX = 2.5;
@@ -14,10 +14,7 @@ const startStepCounter = async () => {
     const accelerationMagnitude = Math.sqrt(x * x + y * y + z * z);
 
     if (accelerationMagnitude > ACC_THRESHOLD_MIN && accelerationMagnitude < ACC_THRESHOLD_MAX && Date.now() - lastStepTime > MIN_TIME_BETWEEN_STEPS) {
-      axios.post("/user-status/count-steps", {}, true, axios.ServerType.ACTIVITY)
-        .catch((error) => { 
-          console.error("count-steps axios error: ", error);
-        });
+      countStep();
       lastStepTime = Date.now();
     }
   };

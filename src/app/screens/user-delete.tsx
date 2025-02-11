@@ -1,26 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from '../../utils/axios';
-import styles from '../../styles/form';
-import LoadingButton from '../../components/input/loading-button';
-import tokenManager from '../../utils/token';
-import PasswordInput from '../../components/input/password-input';
+import styles from '@/src/styles/form';
+import LoadingButton from '@/src/components/input/loading-button';
+import PasswordInput from '@/src/components/input/password-input';
+import { deleteUser } from '@/src/api/user';
 
 export default () => {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
   const onSubmit = async () => {
-    await axios.post("/users/delete", { password: password }, true)
-      .then(async (response) => {
-        Alert.alert('', "탈퇴 완료!");
-        await tokenManager.removeToken();
-        router.push('/');
-      })
-      .catch((error) => {
-        axios.handleError(error, router);
-      });
+    deleteUser(password, router);
   };
 
   return (

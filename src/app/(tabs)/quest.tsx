@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../../styles/common';
-import theme from '../../styles/theme';
-import Map from '../../components/map/map';
+import styles from '@/src/styles/common';
+import theme from '@/src/styles/theme';
+import Map from '@/src/components/map/map';
 
 export default () => {
   return (

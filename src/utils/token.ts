@@ -1,51 +1,29 @@
-import * as SecureStore from 'expo-secure-store';
-import { jwtDecode } from 'jwt-decode';
-import UserData from '../types/user-data';
+import store from '../libs/secure-store';
+import jwt from '../libs/jwt';
 
 const STORAGE_TOKEN_KEY = 'user_token';
 
 const saveToken = async (token: string) => {
-  try {
-    await SecureStore.setItemAsync(STORAGE_TOKEN_KEY, token);
-  } catch (e) {
-    console.error('Failed to save token:', e);
-  }
+    await store.set(STORAGE_TOKEN_KEY, token);
 };
 
 const getToken = async () => {
-  try {
-    const token = await SecureStore.getItemAsync(STORAGE_TOKEN_KEY);
-    return token;
-  } catch (e) {
-    console.error('Failed to get token:', e);
-    return null;
-  }
+    return await store.get(STORAGE_TOKEN_KEY);
 };
 
 const removeToken = async () => {
-  try {
-    await SecureStore.deleteItemAsync(STORAGE_TOKEN_KEY);
-  } catch (e) {
-    console.error('Failed to remove token:', e);
-  }
+    await store.remove(STORAGE_TOKEN_KEY);
 };
 
-const decodeToken = async () => {
-  const token = await getToken();
-  if(token !== null) {
-    return jwtDecode(token) as UserData;
-  }
-  return null;
+const getUserName = async () => {
+    const token = await getToken();
+    const payload = token !== null ? await jwt.decodeToken(token) as LoginTokenData : null;
+    return payload?.name ?? "";
 };
 
-const getName = async () => {
-  const token = await decodeToken();
-  return token?.name ?? "";
-};
-
-export default {
-  saveToken: saveToken,
-  getToken: getToken,
-  removeToken: removeToken,
-  getName: getName
+export default { 
+    saveToken: saveToken,
+    getToken: getToken,
+    removeToken: removeToken,
+    getUserName: getUserName,
 };

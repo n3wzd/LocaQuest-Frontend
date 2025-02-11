@@ -1,13 +1,11 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { Asset } from 'expo-asset';
-import imagePaths from '../../utils/image-paths';
-import { Achievement } from '../../types/user-status';
+import imagePaths from '@/src/config/image-paths';
 import ProgressBar from './progress-bar';
-import styles from '../../styles/common';
-import theme from '../../styles/theme';
-import Formater from '../../utils/string-formater';
-
+import styles from '@/src/styles/common';
+import theme from '@/src/styles/theme';
+import Formater from '@/src/utils/string-formater';
 
 export default ({ achievement }: { achievement: Achievement }) => {
   return (

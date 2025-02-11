@@ -1,24 +1,15 @@
 import React from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import axios from '../../utils/axios';
-import LoadingButton from '../../components/input/loading-button';
+import LoadingButton from '@/src/components/input/loading-button';
+import { updatePasswordCheckVerified } from '@/src/api/user';
 
 export default () => {
   const router = useRouter();
   const { email } = useLocalSearchParams();
 
   const checkEmailVerification = async () => {
-    await axios.post("/users/update-password/check-verified", {email: email}, false)
-      .then((response) => {
-        router.push({
-          pathname: '/screens/find-password-update',
-          params: { email: email },
-        });
-      })
-      .catch((error) => {
-        axios.handleError(error, router);
-      });
+    updatePasswordCheckVerified(email as string, router);
   };
 
   return (

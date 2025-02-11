@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { Marker } from "react-native-maps";
-import { location } from "../../utils/location";
+import { location } from "@/src/services/location";
 
 const MapScreen = () => {
     const [ loc, setLoc ] = useState<Location.LocationObject | null>(null);

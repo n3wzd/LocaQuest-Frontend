@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
-import AchievementTable from "../../components/status/achievement-table";
-import useUserStatusStore from '../../stores/user-status';
-import styles from '../../styles/common';
+import AchievementTable from "@/src/components/status/achievement-table";
+import useUserStatusStore from '@/src/stores/user-status';
+import styles from '@/src/styles/common';
 
 export default () => {
     const { userStatus } = useUserStatusStore();

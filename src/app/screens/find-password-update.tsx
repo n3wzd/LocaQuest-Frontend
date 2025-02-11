@@ -1,11 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import axios from '../../utils/axios';
-import PasswordInput from '../../components/form/password-input';
-import LoadingButton from '../../components/input/loading-button';
-import styles from '../../styles/form';
+import { updatePassword } from '@/src/api/user';
+import PasswordInput from '@/src/components/form/password-input';
+import LoadingButton from '@/src/components/input/loading-button';
+import styles from '@/src/styles/form';
 
 interface FormData {
   password: string;
@@ -23,18 +23,7 @@ export default () => {
   const { email } = useLocalSearchParams();
 
   const onSubmit = async (data: FormData) => {
-    const dto = {
-      email: email,
-      password: data.password
-    };
-    await axios.post("/users/update-password", dto, false)
-      .then((response) => {
-        Alert.alert('', "수정되었습니다!");
-        router.push('/');
-      })
-      .catch((error) => {
-        axios.handleError(error, router);
-      });
+    updatePassword(email as string, data.password, router);
   };
 
   return (

@@ -1,23 +1,15 @@
 import React from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import axios from '../../utils/axios';
-import tokenManager from '../../utils/token';
-import LoadingButton from '../../components/input/loading-button';
+import LoadingButton from '@/src/components/input/loading-button';
+import { registerCheckVerified } from '@/src/api/user';
 
 export default () => {
   const router = useRouter();
   const { email } = useLocalSearchParams();
 
   const checkEmailVerification = async () => {
-    await axios.post("/users/register/check-verified", {email: email}, false)
-      .then(async (response) => {
-        await tokenManager.saveToken(response.data);
-        router.push('/');
-      })
-      .catch((error) => {
-        axios.handleError(error, router);
-      });
+    registerCheckVerified(email as string, router);
   };
 
   return (

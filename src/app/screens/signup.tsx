@@ -1,13 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from '../../utils/axios';
-import styles from '../../styles/form';
-import EmailInput from '../../components/form/email-input';
-import PasswordInput from '../../components/form/password-input';
-import NameInput from '../../components/form/name-input';
-import LoadingButton from '../../components/input/loading-button';
+import styles from '@/src/styles/form';
+import EmailInput from '@/src/components/form/email-input';
+import PasswordInput from '@/src/components/form/password-input';
+import NameInput from '@/src/components/form/name-input';
+import LoadingButton from '@/src/components/input/loading-button';
+import { register } from '@/src/api/user';
 
 interface FormData {
   name: string;
@@ -26,21 +26,7 @@ export default () => {
   const router = useRouter();
 
   const onSubmit = async (data: FormData) => {
-    const dto = {
-      name: data.name,
-      email: data.email,
-      password: data.password
-    }
-    await axios.post("/users/register/send-auth-mail", dto, false)
-      .then((response) => {
-        router.push({
-          pathname: '/screens/signup-verify',
-          params: { email: data.email },
-        });
-      })
-      .catch((error) => {
-        axios.handleError(error, router);
-      });
+    register(data.email, data.password, data.name, router);
   };
 
   return (

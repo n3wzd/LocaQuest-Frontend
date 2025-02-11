@@ -1,13 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import tokenManager from '../../utils/token';
-import axios from '../../utils/axios';
-import styles from '../../styles/form';
-import PasswordInput from '../../components/form/password-input';
-import NameInput from '../../components/form/name-input';
-import LoadingButton from '../../components/input/loading-button';
+import styles from '@/src/styles/form';
+import PasswordInput from '@/src/components/form/password-input';
+import NameInput from '@/src/components/form/name-input';
+import LoadingButton from '@/src/components/input/loading-button';
+import { updateUser } from '@/src/api/user';
 
 interface FormData {
   name: string;
@@ -25,19 +24,7 @@ export default () => {
   const router = useRouter();
 
   const onSubmit = async (data: FormData) => {
-    const dto = {
-      name: data.name,
-      password: data.password
-    }
-    await axios.post("/users/update", dto, true)
-      .then(async (response) => {
-        await tokenManager.saveToken(response.data);
-        Alert.alert('', "수정되었습니다!");
-        router.push('/(tabs)/status');
-      })
-      .catch((error) => {
-        axios.handleError(error, router);
-      });
+    updateUser(data.password, data.name, router);
   };
 
   return (

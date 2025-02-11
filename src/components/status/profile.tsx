@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import ProfileImage from './profile-image';
-import styles from '../../styles/common';
+import styles from '@/src/styles/common';
 
 export default ({ name, imageUri }: { name: string; imageUri: string }) => {
   return (

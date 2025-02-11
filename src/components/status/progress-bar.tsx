@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
-import styles from "../../styles/common";
-import theme from "../../styles/theme";
+import styles from "@/src/styles/common";
+import theme from "@/src/styles/theme";
 
 export default ({ gauge }: { gauge: number }) => {
     return (

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from '../../utils/axios';
-import tokenManager from '../../utils/token';
-import styles from '../../styles/form';
-import LoadingButton from '../../components/input/loading-button';
-import EmailInput from '../../components/input/email-input';
-import PasswordInput from '../../components/input/password-input';
+import styles from '@/src/styles/form';
+import LoadingButton from '@/src/components/input/loading-button';
+import EmailInput from '@/src/components/input/email-input';
+import PasswordInput from '@/src/components/input/password-input';
+import { login } from '@/src/api/user';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -18,18 +17,7 @@ export default function LoginPage() {
       Alert.alert('', '이메일 또는 비밀번호를 입력해주세요.');
       return;
     }
-    const dto = {
-      email: email,
-      password: password
-    };
-    await axios.post("/users/login", dto, false)
-      .then(async (response) => {
-        await tokenManager.saveToken(response.data);
-        router.push('/(tabs)/quest');
-      })
-      .catch((error) => {
-        axios.handleError(error, router);
-      });
+    login(email, password, router);
   };
 
   return (
@@ -40,9 +28,7 @@ export default function LoginPage() {
       <PasswordInput value={password} onChangeText={setPassword} />
       <LoadingButton title="Login" onPress={handleLogin} />
 
-      <Text
-        onPress={() => router.push('/screens/signup')}
-      >
+      <Text onPress={() => router.push('/screens/signup')}>
         Sign up
       </Text>
     </View>

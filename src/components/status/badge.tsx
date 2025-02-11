@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import { Asset } from 'expo-asset';
-import styles from '../../styles/common';
-import imagePaths from '../../utils/image-paths';
+import styles from '@/src/styles/common';
+import imagePaths from '@/src/config/image-paths';
 
 export default ({ achvId, onPress }: { achvId: number; onPress: () => void }) => {
   return (

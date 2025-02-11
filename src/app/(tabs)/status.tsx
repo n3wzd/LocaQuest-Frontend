@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
-import Profile from '../../components/status/profile';
-import Level from '../../components/status/level';
-import BadgesList from '../../components/status/badge-list';
-import AchievementList from '../../components/status/achievement-list';
-import tokenManager from '../../utils/token';
-import useUserStatusStore from '../../stores/user-status';
-import styles from '../../styles/common';
+import { ScrollView, View, Text } from 'react-native';
+import Profile from '@/src/components/status/profile';
+import Level from '@/src/components/status/level';
+import BadgesList from '@/src/components/status/badge-list';
+import AchievementList from '@/src/components/status/achievement-list';
+import tokenManager from '@/src/utils/token';
+import useUserStatusStore from '@/src/stores/user-status';
+import styles from '@/src/styles/common';
 import { Link, useRouter } from 'expo-router';
 import { Asset } from 'expo-asset';
-import InfoBlockContainer from '../../components/status/info-block-container';
+import InfoBlockContainer from '@/src/components/status/info-block-container';
 
 const ProfileScreen = () => {
   const { userStatus, fetchUserStatus } = useUserStatusStore();
   const router = useRouter();
   const [userName, setUserName] = useState<string>("");
-  const userImage = Asset.fromModule(require('../../../assets/achievements/1.png')).uri;
+  const userImage = Asset.fromModule(require('@/assets/achievements/1.png')).uri;
 
   useEffect(() => {
     const init = async () => {
       fetchUserStatus(router);
-      setUserName(await tokenManager.getName());
+      setUserName(await tokenManager.getUserName());
     }
     init();
   }, []);

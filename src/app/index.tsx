@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
-import Login from './screens/login';
-import tokenManager from '../utils/token';
-import { startBackgroundLocation } from '../utils/location';
+import Login from '@/src/app/screens/login';
+import tokenManager from '@/src/utils/token';
+import { startBackgroundLocation } from '@/src/services/location';
 import { useRouter } from 'expo-router';
-import useStaticDataStore from '../stores/static-data';
-import LoadingButton from '../components/input/loading-button';
-import styles from '../styles/common';
-import { startStepCounter } from '../utils/step-counter';
+import useGameDataStore from '@/src/stores/game-data';
+import LoadingButton from '@/src/components/input/loading-button';
+import styles from '@/src/styles/common';
+import { startStepCounter } from '@/src/services/step-counter';
 
 export default () => {
   const [mode, setMode] = useState(0);
-  const { fetchStaticData } = useStaticDataStore();
+  const { fetchGameData } = useGameDataStore();
   const router = useRouter();
   
   useEffect(() => {
@@ -20,7 +20,7 @@ export default () => {
 
   const init = async () => {
     setMode(0);
-    fetchStaticData(router);
+    fetchGameData();
     const token = await tokenManager.getToken();
     if (token !== null) {
       await startStepCounter();

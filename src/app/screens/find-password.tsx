@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import axios from '../../utils/axios';
-import styles from '../../styles/form';
-import EmailInput from '../../components/input/email-input';
-import LoadingButton from '../../components/input/loading-button';
+import styles from '@/src/styles/form';
+import EmailInput from '@/src/components/input/email-input';
+import LoadingButton from '@/src/components/input/loading-button';
+import { updatePasswordSendAuthEmail } from '@/src/api/user';
 
 export default function FindIdPage() {
   const [email, setEmail] = useState('');
@@ -15,16 +15,7 @@ export default function FindIdPage() {
       Alert.alert('', '이메일을 입력해주세요.');
       return;
     }
-    await axios.post("/users/update-password/send-auth-email", {email: email}, false)
-      .then((response) => {
-        router.push({
-          pathname: '/screens/find-password-verify',
-          params: { email: email },
-        });
-      })
-      .catch((error) => {
-        axios.handleError(error, router);
-      });
+    updatePasswordSendAuthEmail(email, router);
   };
 
   return (

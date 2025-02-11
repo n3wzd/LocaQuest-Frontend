@@ -1,18 +1,18 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import styles from '../../styles/common';
+import styles from '@/src/styles/common';
 import ProgressBar from './progress-bar';
-import useStaticDataStore from '@/src/stores/static-data';
+import useGameDataStore from '@/src/stores/game-data';
 
-const Level = ({ level, exp }: { level: number; exp: number; }) => {
-  const { staticData } = useStaticDataStore();
+export default ({ level, exp }: { level: number; exp: number; }) => {
+  const { gameData } = useGameDataStore();
   let gauge = null;
   let expNextTo = null;
 
-  if(staticData) {
-    const expLimit = staticData.expLimitList[level];
-    const expLimitNext = staticData.expLimitList[level + 1];
-    gauge = level === staticData.maxLevel ? 100 : 
+  if(gameData) {
+    const expLimit = gameData.expLimitList[level];
+    const expLimitNext = gameData.expLimitList[level + 1];
+    gauge = level === gameData.maxLevel ? 100 : 
         (expLimit < expLimitNext ? ((exp - expLimit) / (expLimitNext - expLimit)) * 100 : 0);
     expNextTo = expLimitNext;
   }
@@ -27,5 +27,3 @@ const Level = ({ level, exp }: { level: number; exp: number; }) => {
     </View>
   );
 };
-
-export default Level;

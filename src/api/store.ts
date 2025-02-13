@@ -1,23 +1,23 @@
-import { Router } from 'expo-router';
 import http from '../utils/http';
-import { commonErrorHandler, tokenErrorHandler } from '../utils/http-error-handler';
+import errorHandler from '../utils/http-error-handler';
 
-export const setStoreGameData = async (setData: (data: GameData) => void) => {
-    http.post({
-        url: "/client/init", 
-        useToken: false,
-        server: "ACTIVITY",
-        thenCallback: (data) => setData(data),
-        errorCallback: (data, status) => commonErrorHandler(data, status),
-    });
-}
-
-export const setStoreUserStatus = async (setData: (data: UserStatus) => void, router: Router) => {
-    http.post({
-        url: "/user-status/", 
-        useToken: true,
-        server: "CORE",
-        thenCallback: (data) => setData(data),
-        errorCallback: (data, status) => tokenErrorHandler(data, status, router),
-    });
+export const setStoreData = async (setGameData: (data: GameData) => void, setStatusData: (data: UserStatus) => void) => {
+    interface Response {
+        gameData: GameData,
+        userStatus: UserStatus,
+    }
+    try {
+        const response = await http.post({
+            url: "/client/init", 
+            useToken: true,
+            server: "ACTIVITY",
+        });
+        const data: Response = response.data;
+        setGameData(data.gameData);
+        setStatusData(data.userStatus);
+        return true;
+    } catch(error) {
+        errorHandler(error);
+        return false;
+    }
 }

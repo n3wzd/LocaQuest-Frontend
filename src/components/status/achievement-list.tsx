@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import AchievementListItem from './achievement-list-item';
 
-export default ({ achievements }: { achievements: Achievement[] }) => {
+export default ({ achievements }: { achievements: UserAchievement[] }) => {
   return (
     <View style={{ paddingVertical: 10 }}>
       {achievements.map((achievement) => (

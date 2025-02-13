@@ -16,7 +16,7 @@ export default ({ level, exp }: { level: number; exp: number; }) => {
         (expLimit < expLimitNext ? ((exp - expLimit) / (expLimitNext - expLimit)) * 100 : 0);
     expNextTo = expLimitNext;
   }
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.boldText}>Level {level}</Text>

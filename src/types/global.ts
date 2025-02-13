@@ -5,27 +5,35 @@ declare global {
   }
 
   interface Achievement {
-    achvId: number;
+    achvId: string;
     name: string;
     desc: string;
-    progress: number;
+  }
+
+  interface UserAchievement extends Achievement {
     achievedAt: string;
+    progress: number;
+  }
+
+  interface UserParam {
+    steps: number;
+    exp: number;
+    distance: number;
+  }
+
+  interface UserStatistic extends UserParam {
+    userId: string;
   }
 
   interface UserStatus {
-    level: number;
-    exp: number;
-    steps: number;
-    distance: number;
-    achievementList: Achievement[];
+    userStatistic: UserStatistic;
+    achievementList: UserAchievement[];
   }
 
   interface LoginTokenData {
-    id: number;
+    sub: string;
     name: string;
   }
-
-  type HttpResopnseCallback = (data: any, status: number) => void;
 }
 
 export {};

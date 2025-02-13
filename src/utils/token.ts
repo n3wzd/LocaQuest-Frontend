@@ -15,6 +15,12 @@ const removeToken = async () => {
     await store.remove(STORAGE_TOKEN_KEY);
 };
 
+const getUserId = async () => {
+    const token = await getToken();
+    const payload = token !== null ? await jwt.decodeToken(token) as LoginTokenData : null;
+    return payload?.sub ?? "";
+};
+
 const getUserName = async () => {
     const token = await getToken();
     const payload = token !== null ? await jwt.decodeToken(token) as LoginTokenData : null;
@@ -25,5 +31,6 @@ export default {
     saveToken: saveToken,
     getToken: getToken,
     removeToken: removeToken,
+    getUserId: getUserId,
     getUserName: getUserName,
 };

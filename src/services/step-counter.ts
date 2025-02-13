@@ -1,5 +1,5 @@
 import { Accelerometer, AccelerometerMeasurement } from 'expo-sensors';
-import { countStep } from '../api/user-status';
+import socket from './socket';
 
 const ACC_THRESHOLD_MIN = 1.5;
 const ACC_THRESHOLD_MAX = 2.5;
@@ -14,7 +14,7 @@ const startStepCounter = async () => {
     const accelerationMagnitude = Math.sqrt(x * x + y * y + z * z);
 
     if (accelerationMagnitude > ACC_THRESHOLD_MIN && accelerationMagnitude < ACC_THRESHOLD_MAX && Date.now() - lastStepTime > MIN_TIME_BETWEEN_STEPS) {
-      countStep();
+      socket.send();
       lastStepTime = Date.now();
     }
   };

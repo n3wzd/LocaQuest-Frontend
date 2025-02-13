@@ -7,12 +7,12 @@ import styles from '@/src/styles/common';
 import theme from '@/src/styles/theme';
 import Formater from '@/src/utils/string-formater';
 
-export default ({ achievement }: { achievement: Achievement }) => {
+export default ({ achievement }: { achievement: UserAchievement }) => {
   return (
     <View style={{ ...styles.container, backgroundColor: theme.colors.lightSpace, width: "47%", height: 240, margin: 5 }}>
       <View style={{alignItems: 'center'}}>
         <Text style={{ ...styles.title, marginBottom: 10 }}>{achievement.name}</Text>
-        <Image source={{ uri: Asset.fromModule(imagePaths[achievement.achvId]).uri }} style={{ ...styles.badgeImage, width: 90, height: 90, margin: 15 }} />
+        <Image source={{ uri: Asset.fromModule(imagePaths[Number(achievement.achvId)]).uri }} style={{ ...styles.badgeImage, width: 90, height: 90, margin: 15 }} />
         <Text style={{ ...styles.text, marginBottom: 10 }}>{achievement.desc}</Text>
       </View>
       {achievement.progress === 100 ? (

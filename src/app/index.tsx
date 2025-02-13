@@ -8,10 +8,13 @@ import useGameDataStore from '@/src/stores/game-data';
 import LoadingButton from '@/src/components/input/loading-button';
 import styles from '@/src/styles/common';
 import { startStepCounter } from '@/src/services/step-counter';
+import useUserStatusStore from '@/src/stores/user-status';
+import { setStoreData } from '@/src/api/store';
 
 export default () => {
   const [mode, setMode] = useState(0);
   const { fetchGameData } = useGameDataStore();
+  const { fetchUserStatus } = useUserStatusStore();
   const router = useRouter();
   
   useEffect(() => {
@@ -20,15 +23,18 @@ export default () => {
 
   const init = async () => {
     setMode(0);
-    fetchGameData();
     const token = await tokenManager.getToken();
     if (token !== null) {
-      await startStepCounter();
-      const granted = await startBackgroundLocation();
-      if(granted) {
-        router.push('/(tabs)/quest');
+      if(await setStoreData(fetchGameData, fetchUserStatus)) {
+        await startStepCounter();
+        const granted = await startBackgroundLocation();
+        if(granted) {
+          router.push('/(tabs)/quest');
+        } else {
+          setMode(2);
+        }
       } else {
-        setMode(2);
+        setMode(1);
       }
     } else {
       setMode(1);

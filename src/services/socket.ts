@@ -1,15 +1,18 @@
 import { distance, setDistance } from './location';
 import useUserStatusStore from '@/src/stores/user-status';
+import useAchievementPopupStore from '@/src/stores/achievement-popup';
 import tokenManager from '@/src/utils/token';
 
-interface Response {
-    steps: number,
+interface Request {
+    userId: string,
     distance: number,
-    exp: number,
-    achievementIdList: number[],
 }
+interface Reponse {
+    userStatus: UserStatus,
+    newAchvIdList: number[],
+}
+
 const url = 'ws://' + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_URL ?? "") + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_WEBSOCKET_PORT ?? "");
-console.log(url);
 const ws = new WebSocket(url);
 
 ws.onopen = () => {
@@ -25,25 +28,14 @@ ws.onerror = (error) => {
 };
 
 ws.onmessage = (event) => {
-    const data = JSON.parse(event.data as string) as Response;
-    const userStatus = useUserStatusStore.getState().userStatus;
-    if(userStatus) {
-        const params = userStatus.userStatistic;
-        useUserStatusStore.getState().fetchUserStatus({
-            userStatistic: {
-                steps: params.steps + data.steps,
-                exp: params.exp + data.exp,
-                distance: params.distance + data.distance,
-                userId: userStatus.userStatistic.userId,
-            },
-            achievementList: userStatus.achievementList,
-        });
-    }
+    const data = JSON.parse(event.data as string) as Reponse;
+    useUserStatusStore.getState().fetchUserStatus(data.userStatus);
+    useAchievementPopupStore.getState().newAchvQueueAppend(data.newAchvIdList);
     setDistance(0);
 };
 
 const send = async () => {
-    const req = {
+    const req: Request = {
         userId: await tokenManager.getUserId(),
         distance: Math.floor(distance),
     }

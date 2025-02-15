@@ -1,7 +1,13 @@
 declare global {
-  interface GameData {
-    maxLevel: number;
-    expLimitList: number[];
+  interface UserData {
+    sub: string;
+    name: string;
+  }
+  
+  interface UserParam {
+    steps: number;
+    exp: number;
+    distance: number;
   }
 
   interface Achievement {
@@ -10,29 +16,20 @@ declare global {
     desc: string;
   }
 
-  interface UserAchievement extends Achievement {
-    achievedAt: string;
-    progress: number;
+  interface UserAchievement {
+    achvId: string,
+    achievedAt: string | undefined,
   }
 
-  interface UserParam {
-    steps: number;
-    exp: number;
-    distance: number;
+  interface UserAchievementListItem extends UserAchievement {
+    progress: number,
   }
 
-  interface UserStatistic extends UserParam {
-    userId: string;
-  }
-
-  interface UserStatus {
-    userStatistic: UserStatistic;
-    achievementList: UserAchievement[];
-  }
-
-  interface LoginTokenData {
-    sub: string;
-    name: string;
+  interface UserStatus extends UserParam {
+    level: number;
+    expCurTo: number;
+    expNextTo: number;
+    achievementList: UserAchievementListItem[],
   }
 }
 

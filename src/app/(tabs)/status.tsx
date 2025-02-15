@@ -21,16 +21,16 @@ const ProfileScreen = () => {
       setUserName(await tokenManager.getUserName());
     }
     init();
-  }, [userStatus]);
+  }, []);
 
   return (
     userStatus !== null ? (
       <View style={styles.screen}>
         <ScrollView contentContainerStyle={{ padding: 15 }}>
           <Profile name={userName} imageUri={userImage} />
-          <Level level={1} exp={userStatus.userStatistic.exp} />
+          <Level level={userStatus.level} exp={userStatus.exp} expCurTo={userStatus.expCurTo} expNextTo={userStatus.expNextTo} />
           <View style={{ marginBottom: 20 }}>
-            <InfoBlockContainer steps={userStatus.userStatistic.steps} distance={userStatus.userStatistic.distance}/>
+            <InfoBlockContainer steps={userStatus.steps} distance={userStatus.distance}/>
           </View>
           <View style={styles.rowContainer}>
             <Text style={styles.boldText}>달성한 업적</Text>
@@ -38,7 +38,7 @@ const ProfileScreen = () => {
           </View>
           <BadgesList achvIdList={ userStatus.achievementList.filter(achv => achv.progress === 100).map(achv => Number(achv.achvId)) } />
           <Text style={styles.boldText}>진행 중인 업적</Text>
-          <AchievementList achievements={userStatus.achievementList.filter(achv => achv.progress < 100).sort((a, b) => b.progress - a.progress).slice(0, 3)}/>
+          <AchievementList achievements={userStatus.achievementList.filter(achv => achv.achievedAt).sort((a, b) => b.progress - a.progress).slice(0, 3)}/>
         </ScrollView>
       </View>
     ) : (

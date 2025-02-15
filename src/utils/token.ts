@@ -17,13 +17,13 @@ const removeToken = async () => {
 
 const getUserId = async () => {
     const token = await getToken();
-    const payload = token !== null ? await jwt.decodeToken(token) as LoginTokenData : null;
+    const payload = token !== null ? await jwt.decodeToken(token) as UserData : null;
     return payload?.sub ?? "";
 };
 
 const getUserName = async () => {
     const token = await getToken();
-    const payload = token !== null ? await jwt.decodeToken(token) as LoginTokenData : null;
+    const payload = token !== null ? await jwt.decodeToken(token) as UserData : null;
     return payload?.name ?? "";
 };
 

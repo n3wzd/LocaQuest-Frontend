@@ -3,12 +3,13 @@ import http from '../utils/http';
 import { Alert } from 'react-native';
 import tokenManager from '../utils/token';
 import errorHandler from '../utils/http-error-handler';
+import { encryptoRSAPassword } from '../utils/crypto';
 
 export const updatePassword = async (email: string, password: string, router: Router) => {
   try {
     await http.post({
       url: "/users/update-password", 
-      params: { email: email, password: password },
+      params: { email: email, password: encryptoRSAPassword(password) },
       useToken: false,
       server: "CORE",
     });
@@ -57,7 +58,7 @@ export const login = async (email: string, password: string, router: Router) => 
   try {
     const response = await http.post({
       url: "/users/login", 
-      params: { email: email, password: password },
+      params: { email: email, password: encryptoRSAPassword(password) },
       useToken: false,
       server: "CORE",
     });
@@ -87,7 +88,7 @@ export const register = async (email: string, password: string, name: string, ro
   try {
     await http.post({
       url: "/users/register/send-auth-mail", 
-      params: { email: email, password: password, name: name },
+      params: { email: email, password: encryptoRSAPassword(password), name: name },
       useToken: false,
       server: "CORE",
     });
@@ -104,7 +105,7 @@ export const deleteUser = async (password: string, router: Router) => {
   try {
     await http.post({
       url: "/users/delete", 
-      params: { password: password },
+      params: { password: encryptoRSAPassword(password) },
       useToken: true,
       server: "CORE",
     });
@@ -120,7 +121,7 @@ export const updateUser = async (password: string, name: string, router: Router)
   try {
     const response = await http.post({
       url: "/users/update", 
-      params: { password: password, name: name },
+      params: { password: encryptoRSAPassword(password), name: name },
       useToken: true,
       server: "CORE",
     });

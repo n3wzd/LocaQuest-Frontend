@@ -1,7 +1,7 @@
 import { FlatList } from "react-native";
 import AchievementTableItem from "./achievement-table-item";
 
-export default ({ achievements }: { achievements: UserAchievement[] }) => {
+export default ({ achievements }: { achievements: (Achievement & UserAchievementListItem)[] }) => {
   return (
     <FlatList
       data={achievements}

@@ -4,16 +4,14 @@ import Login from '@/src/app/screens/login';
 import tokenManager from '@/src/utils/token';
 import { startBackgroundLocation } from '@/src/services/location';
 import { useRouter } from 'expo-router';
-import useGameDataStore from '@/src/stores/game-data';
 import LoadingButton from '@/src/components/input/loading-button';
 import styles from '@/src/styles/common';
 import { startStepCounter } from '@/src/services/step-counter';
 import useUserStatusStore from '@/src/stores/user-status';
-import { setStoreData } from '@/src/api/store';
+import { setStoreData, receiveRsmPublicKey } from '@/src/api/init';
 
 export default () => {
   const [mode, setMode] = useState(0);
-  const { fetchGameData } = useGameDataStore();
   const { fetchUserStatus } = useUserStatusStore();
   const router = useRouter();
   
@@ -23,9 +21,10 @@ export default () => {
 
   const init = async () => {
     setMode(0);
+    receiveRsmPublicKey();
     const token = await tokenManager.getToken();
     if (token !== null) {
-      if(await setStoreData(fetchGameData, fetchUserStatus)) {
+      if(await setStoreData(fetchUserStatus)) {
         await startStepCounter();
         const granted = await startBackgroundLocation();
         if(granted) {

@@ -41,6 +41,8 @@
       "eas": {
         "projectId": "cedae3e3-4bea-4c87-b2fd-cb8defeaeb00"
       }
-    }
+    },
+    "developmentMode": false,
+    "disableNetworkInterception": true
   }
 }

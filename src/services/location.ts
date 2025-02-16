@@ -10,6 +10,10 @@ const updateLocation = (newLocation: Location.LocationObject) => {
   location = newLocation;
 }
 
+const getDistance = () => {
+  return distance
+}
+
 const setDistance = (dist: number) => {
   distance = dist;
 }
@@ -56,15 +60,18 @@ const startBackgroundLocation = async () => {
   }
 
   locationSubscription = await Location.watchPositionAsync({
-      accuracy: Location.Accuracy.High,
+      accuracy: Location.Accuracy.BestForNavigation,
       timeInterval: 5000,
-      distanceInterval: 1,
+      distanceInterval: 5,
     }, (data) => {
+      if (data.coords.accuracy && data.coords.accuracy < 50) {
         updateLocation(data);
+        return;
+      }
     }
   );
   return true;
 };
 //////////////////////////////////
 
-export { startBackgroundLocation, location, distance, setDistance };
+export { startBackgroundLocation, location, getDistance, setDistance };

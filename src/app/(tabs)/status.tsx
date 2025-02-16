@@ -38,7 +38,7 @@ const ProfileScreen = () => {
           </View>
           <BadgesList achvIdList={ userStatus.achievementList.filter(achv => achv.progress === 100).map(achv => Number(achv.achvId)) } />
           <Text style={styles.boldText}>진행 중인 업적</Text>
-          <AchievementList achievements={userStatus.achievementList.filter(achv => achv.achievedAt).sort((a, b) => b.progress - a.progress).slice(0, 3)}/>
+          <AchievementList achievements={userStatus.achievementList.filter(achv => !achv.achievedAt).sort((a, b) => b.progress - a.progress).slice(0, 3)}/>
         </ScrollView>
       </View>
     ) : (

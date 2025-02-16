@@ -1,4 +1,4 @@
-import { distance, setDistance } from './location';
+import { getDistance, setDistance } from './location';
 import useUserStatusStore from '@/src/stores/user-status';
 import useAchievementPopupStore from '@/src/stores/achievement-popup';
 import tokenManager from '@/src/utils/token';
@@ -14,6 +14,8 @@ interface Reponse {
 
 const url = 'ws://' + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_URL ?? "") + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_WEBSOCKET_PORT ?? "");
 const ws = new WebSocket(url);
+
+let deltaDistanceCache = 0;
 
 ws.onopen = () => {
     console.log('websocket is connected');
@@ -31,13 +33,14 @@ ws.onmessage = (event) => {
     const data = JSON.parse(event.data as string) as Reponse;
     useUserStatusStore.getState().fetchUserStatus(data.userStatus);
     useAchievementPopupStore.getState().newAchvQueueAppend(data.newAchvIdList);
-    setDistance(0);
+    setDistance(getDistance() - deltaDistanceCache);
 };
 
 const send = async () => {
+    deltaDistanceCache = Math.floor(getDistance());
     const req: Request = {
         userId: await tokenManager.getUserId(),
-        distance: Math.floor(distance),
+        distance: deltaDistanceCache,
     }
     ws.send(JSON.stringify(req));
 }

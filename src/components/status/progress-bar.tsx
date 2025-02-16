@@ -6,7 +6,7 @@ import theme from "@/src/styles/theme";
 export default ({ gauge }: { gauge: number }) => {
     return (
         <View style={{ alignItems: 'center' }}>
-            <Text style={styles.subText}>{gauge.toFixed(2)}%</Text>
+            <Text style={styles.subText}>{gauge.toFixed(0)}%</Text>
             <View style={barStyles.progressBar}>
                 <View style={[ barStyles.progressFill, { width: `${gauge}%` },]}/>
             </View>

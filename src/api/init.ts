@@ -1,7 +1,7 @@
 import http from '../utils/http';
 import errorHandler from '../utils/http-error-handler';
 import GAME from '../config/game';
-import crypto from '../config/crypto';
+// import crypto from '../config/crypto';
 
 export const setStoreData = async (setUserStatusData: (data: UserStatus) => void) => {
     interface Response {
@@ -35,7 +35,7 @@ export const receiveRsmPublicKey = async () => {
             server: "CORE",
         });
         const data: Response = response.data;
-        crypto.init(Buffer.from(data.rsaPublicKey, 'base64'));
+        // crypto.init(Buffer.from(data.rsaPublicKey, 'base64'));
         return true;
     } catch(error) {
         errorHandler(error);

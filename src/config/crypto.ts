@@ -1,4 +1,4 @@
-let corePublicKey: Buffer<ArrayBuffer> | undefined = undefined;
+/*let corePublicKey: Buffer<ArrayBuffer> | undefined = undefined;
 
 const init = (key: Buffer<ArrayBuffer>) => {
     corePublicKey = key;
@@ -6,5 +6,5 @@ const init = (key: Buffer<ArrayBuffer>) => {
 
 export default {
     CORE_PUBLIC_KEY: corePublicKey,
-    init: init,
-}
+    init: () => {},
+}*/

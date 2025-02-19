@@ -20,7 +20,7 @@ export default ({ achievement }: { achievement: UserAchievementListItem }) => {
       {achievement.achievedAt ? (
         <View style={{alignItems: 'center'}}>
           <Text style={{ ...styles.boldText, color: theme.colors.lightWine }}>완료!</Text>
-          <Text style={ styles.subText }>{ Formater.formatDate(achievement.achievedAt) } 달성</Text>
+          <Text style={ styles.subText }>{ Formater.formatDateLetter(achievement.achievedAt) } 달성</Text>
         </View>
       ) : (
         <ProgressBar gauge={achievement.progress} />

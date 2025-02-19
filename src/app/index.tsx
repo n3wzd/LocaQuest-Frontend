@@ -7,12 +7,10 @@ import { useRouter } from 'expo-router';
 import LoadingButton from '@/src/components/input/loading-button';
 import styles from '@/src/styles/common';
 import { startStepCounter } from '@/src/services/step-counter';
-import useUserStatusStore from '@/src/stores/user-status';
-import { setStoreData, receiveRsmPublicKey } from '@/src/api/init';
+import { setStoreData, receiveRsmPublicKey, getUserStatisticList } from '@/src/api/init';
 
 export default () => {
   const [mode, setMode] = useState(0);
-  const { fetchUserStatus } = useUserStatusStore();
   const router = useRouter();
   
   useEffect(() => {
@@ -24,7 +22,10 @@ export default () => {
     receiveRsmPublicKey();
     const token = await tokenManager.getToken();
     if (token !== null) {
-      if(await setStoreData(fetchUserStatus)) {
+      let ok = true;
+      ok = ok && await getUserStatisticList(await tokenManager.getUserId());
+      ok = ok && await setStoreData();
+      if(ok) {
         await startStepCounter();
         const granted = await startBackgroundLocation();
         if(granted) {

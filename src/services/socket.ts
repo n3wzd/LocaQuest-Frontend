@@ -2,10 +2,12 @@ import { getDistance, setDistance } from './location';
 import useUserStatusStore from '@/src/stores/user-status';
 import useAchievementPopupStore from '@/src/stores/achievement-popup';
 import tokenManager from '@/src/utils/token';
+import format from '@/src/utils/string-formater';
 
 interface Request {
     userId: string,
     distance: number,
+    date: string,
 }
 interface Reponse {
     userStatus: UserStatus,
@@ -41,6 +43,7 @@ const send = async () => {
     const req: Request = {
         userId: await tokenManager.getUserId(),
         distance: deltaDistanceCache,
+        date: format.formatDate((new Date()).toString()),
     }
     ws.send(JSON.stringify(req));
 }

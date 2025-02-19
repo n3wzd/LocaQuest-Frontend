@@ -1,9 +1,11 @@
 import http from '../utils/http';
 import errorHandler from '../utils/http-error-handler';
 import GAME from '../config/game';
+import useUserStatusStore from '@/src/stores/user-status';
+import statDB from '@/src/services/statistic';
 // import crypto from '../config/crypto';
 
-export const setStoreData = async (setUserStatusData: (data: UserStatus) => void) => {
+export const setStoreData = async () => {
     interface Response {
         achievementList: Achievement[],
         userStatus: UserStatus,
@@ -16,7 +18,7 @@ export const setStoreData = async (setUserStatusData: (data: UserStatus) => void
         });
         const data: Response = response.data;
         GAME.init(data.achievementList);
-        setUserStatusData(data.userStatus);
+        useUserStatusStore.getState().fetchUserStatus(data.userStatus);
         return true;
     } catch(error) {
         errorHandler(error);
@@ -36,6 +38,18 @@ export const receiveRsmPublicKey = async () => {
         });
         const data: Response = response.data;
         // crypto.init(Buffer.from(data.rsaPublicKey, 'base64'));
+        return true;
+    } catch(error) {
+        errorHandler(error);
+        return false;
+    }
+}
+
+export const getUserStatisticList = async (userId: string) => {
+    try {
+        const response = await http.get({ url: `/user-status/statistics/${userId}`, useToken: false, server: "CORE" });
+        const data: UserStatistic[] = response.data;
+        statDB.insertAll(data);
         return true;
     } catch(error) {
         errorHandler(error);

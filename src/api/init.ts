@@ -1,24 +1,39 @@
 import http from '../utils/http';
 import errorHandler from '../utils/http-error-handler';
 import GAME from '../config/game';
-import useUserStatusStore from '@/src/stores/user-status';
-import statDB from '@/src/services/statistic';
+import useUserStatisticStore from '@/src/stores/user-statistic';
+import useUserAchevementStore from '@/src/stores/user-achievement';
+import useAttendPopupStore from '@/src/stores/attend-popup';
+import statDB from '@/src/services/user-statistic';
+import achvDB from '@/src/services/user-achievement';
+import format from '@/src/utils/date';
 // import crypto from '../config/crypto';
 
-export const setStoreData = async () => {
+export const startApi = async () => {
     interface Response {
         achievementList: Achievement[],
-        userStatus: UserStatus,
+        userAchievementList: UserAchievement[],
+        userStatisticList: UserStatistic[],
+        isAttend: boolean,
     }
     try {
+        const today = format.getToday();
         const response = await http.post({
-            url: "/client/init", 
+            url: "/client/start", 
             useToken: true,
             server: "ACTIVITY",
+            params: { date: today }
         });
         const data: Response = response.data;
         GAME.init(data.achievementList);
-        useUserStatusStore.getState().fetchUserStatus(data.userStatus);
+        statDB.insertAll(data.userStatisticList);
+        statDB.setAttendDate(today);
+        achvDB.insertAll(data.userAchievementList);
+        useUserStatisticStore.getState().setUserStatistic(statDB.userParamSum);
+        useUserAchevementStore.getState().userAchvListAppend(data.userAchievementList);
+        if(data.isAttend) {
+            useAttendPopupStore.getState().openPopup();
+        }
         return true;
     } catch(error) {
         errorHandler(error);
@@ -38,18 +53,6 @@ export const receiveRsmPublicKey = async () => {
         });
         const data: Response = response.data;
         // crypto.init(Buffer.from(data.rsaPublicKey, 'base64'));
-        return true;
-    } catch(error) {
-        errorHandler(error);
-        return false;
-    }
-}
-
-export const getUserStatisticList = async (userId: string) => {
-    try {
-        const response = await http.get({ url: `/user-status/statistics/${userId}`, useToken: false, server: "CORE" });
-        const data: UserStatistic[] = response.data;
-        statDB.insertAll(data);
         return true;
     } catch(error) {
         errorHandler(error);

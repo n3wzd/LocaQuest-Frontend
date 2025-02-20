@@ -29,13 +29,6 @@ declare global {
     userId: string;
     statDate: string;
   }
-
-  interface UserStatus extends UserParam {
-    level: number;
-    expCurTo: number;
-    expNextTo: number;
-    achievementList: UserAchievementListItem[],
-  }
 }
 
 export {};

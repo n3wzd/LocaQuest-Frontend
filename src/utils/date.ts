@@ -31,8 +31,18 @@ const formatDate = (dateStr: string): string => {
   const [year, month, day] = formattedDate.split('.');
   return `${year}-${month}-${day}`;
 }
-  
+
+const getToday = () => formatDate((new Date()).toString());
+
+const getDateFromToday = (day: number) => {
+  const date = new Date();
+  date.setDate(date.getDate() + day);
+  return formatDate(date.toString());
+}
+
 export default { 
   formatDateLetter: formatDateLetter,
-  formatDate: formatDate
+  formatDate: formatDate,
+  getToday: getToday,
+  getDateFromToday: getDateFromToday,
 };

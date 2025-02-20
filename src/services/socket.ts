@@ -1,8 +1,10 @@
 import { getDistance, setDistance } from './location';
-import useUserStatusStore from '@/src/stores/user-status';
+import useUserStatusStore from '@/src/stores/user-statistic';
+import useUserAchevementStore from '@/src/stores/user-achievement';
 import useAchievementPopupStore from '@/src/stores/achievement-popup';
 import tokenManager from '@/src/utils/token';
-import format from '@/src/utils/string-formater';
+import format from '@/src/utils/date';
+import statDB from '@/src/services/user-statistic';
 
 interface Request {
     userId: string,
@@ -10,14 +12,12 @@ interface Request {
     date: string,
 }
 interface Reponse {
-    userStatus: UserStatus,
-    newAchvIdList: number[],
+    deltaParam: UserParam,
+    newAchvList: UserAchievement[],
 }
 
 const url = 'ws://' + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_URL ?? "") + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_WEBSOCKET_PORT ?? "");
 const ws = new WebSocket(url);
-
-let deltaDistanceCache = 0;
 
 ws.onopen = () => {
     console.log('websocket is connected');
@@ -33,17 +33,18 @@ ws.onerror = (error) => {
 
 ws.onmessage = (event) => {
     const data = JSON.parse(event.data as string) as Reponse;
-    useUserStatusStore.getState().fetchUserStatus(data.userStatus);
-    useAchievementPopupStore.getState().newAchvQueueAppend(data.newAchvIdList);
-    setDistance(getDistance() - deltaDistanceCache);
+    useUserStatusStore.getState().addUserStatistic(data.deltaParam);
+    useUserAchevementStore.getState().userAchvListAppend(data.newAchvList);
+    useAchievementPopupStore.getState().newAchvQueueAppend(data.newAchvList);
+    statDB.updateAttend();
+    setDistance(getDistance() - data.deltaParam.distance);
 };
 
 const send = async () => {
-    deltaDistanceCache = Math.floor(getDistance());
     const req: Request = {
         userId: await tokenManager.getUserId(),
-        distance: deltaDistanceCache,
-        date: format.formatDate((new Date()).toString()),
+        distance: Math.floor(getDistance()),
+        date: format.getToday(),
     }
     ws.send(JSON.stringify(req));
 }

@@ -1,22 +1,18 @@
 import { View, Text } from "react-native";
 import AchievementTable from "@/src/components/status/achievement-table";
-import useUserStatusStore from '@/src/stores/user-status';
+import useUserAchievementStore from '@/src/stores/user-achievement';
 import styles from '@/src/styles/common';
 
 export default () => {
-    const { userStatus } = useUserStatusStore();
-    const cnt = userStatus?.achievementList.filter(achv => achv.progress === 100).length ?? 0;
+    const { userAchvList } = useUserAchievementStore();
+    const cnt = userAchvList.filter(achv => achv.progress === 100).length ?? 0;
     return (
-        userStatus !== null ? (
-            <View style={{ ...styles.screen, padding: 10 }}>
-                <Text style={{ ...styles.title, fontSize: 28, padding: 4 }}>업적</Text>
-                <Text style={{ ...styles.text, padding: 6 }}>({cnt}/{userStatus.achievementList.length})</Text>
-                <View style={{ height: '90%' }}>
-                    <AchievementTable achievements={userStatus.achievementList}/>
-                </View>
+        <View style={{ ...styles.screen, padding: 10 }}>
+            <Text style={{ ...styles.title, fontSize: 28, padding: 4 }}>업적</Text>
+            <Text style={{ ...styles.text, padding: 6 }}>({cnt}/{userAchvList.length})</Text>
+            <View style={{ height: '90%' }}>
+                <AchievementTable achievements={userAchvList}/>
             </View>
-        ) : (
-            <View/>
-        )
+        </View>
     );
 }

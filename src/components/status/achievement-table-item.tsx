@@ -5,7 +5,7 @@ import imagePaths from '@/src/config/image-paths';
 import ProgressBar from './progress-bar';
 import styles from '@/src/styles/common';
 import theme from '@/src/styles/theme';
-import Formater from '@/src/utils/string-formater';
+import Formater from '@/src/utils/date';
 import GAME from '@/src/config/game';
 
 export default ({ achievement }: { achievement: UserAchievementListItem }) => {

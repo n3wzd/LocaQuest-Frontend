@@ -38,6 +38,20 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: theme.fonts.title,
     },
+    overlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: theme.colors.darkSpace,
+    },
+    popup: {
+        width: 300,
+        alignItems: "center",
+        backgroundColor: theme.colors.white,
+        padding: 15,
+        borderRadius: 10,
+        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
+    },
     badgeImage: {
         width: 50,
         height: 50,

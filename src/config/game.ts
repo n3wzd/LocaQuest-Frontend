@@ -7,7 +7,15 @@ const init = (achvList: Achievement[]) => {
     }
 }
 
+const DATA = {
+    MAX_LEVEL: 100,
+    EXP_PARAM_A: 100,
+    EXP_PARAM_B: 500,
+    EXP_PARAM_C: 1000,
+}
+
 export default {
+    ...DATA,
     ACHIEVEMENT: achievements,
     init: init,
 }

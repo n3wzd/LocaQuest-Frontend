@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 import LoadingButton from '@/src/components/input/loading-button';
 import styles from '@/src/styles/common';
 import { startStepCounter } from '@/src/services/step-counter';
-import { setStoreData, receiveRsmPublicKey, getUserStatisticList } from '@/src/api/init';
+import { receiveRsmPublicKey, startApi } from '@/src/api/init';
 
 export default () => {
   const [mode, setMode] = useState(0);
@@ -19,13 +19,10 @@ export default () => {
 
   const init = async () => {
     setMode(0);
-    receiveRsmPublicKey();
+    await receiveRsmPublicKey();
     const token = await tokenManager.getToken();
     if (token !== null) {
-      let ok = true;
-      ok = ok && await getUserStatisticList(await tokenManager.getUserId());
-      ok = ok && await setStoreData();
-      if(ok) {
+      if(await startApi()) {
         await startStepCounter();
         const granted = await startBackgroundLocation();
         if(granted) {

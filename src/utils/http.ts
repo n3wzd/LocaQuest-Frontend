@@ -12,8 +12,8 @@ interface httpParam {
 
 const createUrl = ( baseUrlType: ServerType, detailUrl: string ) => {
     const API_BASE_URL = {
-        CORE: 'http://' + (process.env.EXPO_PUBLIC_SERVER_CORE_URL ?? "") + (process.env.EXPO_PUBLIC_SERVER_CORE_PORT ?? ""),
-        ACTIVITY: 'http://' + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_URL ?? "") + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_HTTP_PORT ?? "")
+        CORE: 'http://' + (process.env.EXPO_PUBLIC_SERVER_CORE_URL ?? "") + ":" + (process.env.EXPO_PUBLIC_SERVER_CORE_PORT ?? ""),
+        ACTIVITY: 'http://' + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_URL ?? "") + ":" + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_HTTP_PORT ?? "")
     };
     return API_BASE_URL[baseUrlType] + detailUrl;
 }

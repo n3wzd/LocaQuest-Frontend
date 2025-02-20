@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 interface achievementPopupStore {
-  newAchvQueue: number[];
-  newAchvQueueAppend: (items: number[]) => void;
+  newAchvQueue: UserAchievement[];
+  newAchvQueueAppend: (items: UserAchievement[]) => void;
   newAchvQueuePop: () => void;
 }
 

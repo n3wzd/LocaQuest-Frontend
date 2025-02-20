@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, FlatList } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import styles from '@/src/styles/common';
 import tokenManager from '@/src/utils/token';
 import { useRouter } from 'expo-router';
-import statDB from '@/src/services/statistic';
+import statDB from '@/src/services/user-statistic';
+import BarChart from '@/src/components/chart/chart';
+import format from '@/src/utils/date';
 
 export default () => {
   const router = useRouter();
@@ -15,35 +17,14 @@ export default () => {
   }
 
   useEffect(() => {
-    setStatList(statDB.select());
+    setStatList(statDB.selectByRange(format.getDateFromToday(-7), format.getToday()));
   }, []);
-
-  const renderItem = ({ item }: { item: UserStatistic }) => (
-    <View>
-      <Text>{item.statDate}</Text>
-      <Text>{item.exp}</Text>
-      <Text>{item.steps}</Text>
-      <Text>{item.distance}</Text>
-    </View>
-  );
 
   return (
     <View style={styles.container}>
       <Button title="로그아웃" onPress={handleLogout} />
       <Text style={styles.boldText}>날짜별 데이터</Text>
-      <View>
-        <View>
-          <Text style={styles.text}>날짜</Text>
-          <Text style={styles.text}>경험치</Text>
-          <Text style={styles.text}>걸음수</Text>
-          <Text style={styles.text}>이동 거리</Text>
-        </View>
-        <FlatList
-          data={statList}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.statDate}
-        />
-      </View>
+      <BarChart values={statList.map((item) => item.exp)} />
     </View>
   );
 }

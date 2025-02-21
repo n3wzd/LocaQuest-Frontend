@@ -25,12 +25,17 @@ export const startApi = async () => {
             params: { date: today }
         });
         const data: Response = response.data;
+        
         GAME.init(data.achievementList);
         statDB.insertAll(data.userStatisticList);
         statDB.setAttendDate(today);
+        achvDB.initData();
         achvDB.insertAll(data.userAchievementList);
-        useUserStatisticStore.getState().setUserStatistic(statDB.userParamSum);
-        useUserAchevementStore.getState().userAchvListAppend(data.userAchievementList);
+
+        useUserStatisticStore.getState().resetUserStatistic();
+        useUserAchevementStore.getState().resetUserAchvMap();
+        useUserStatisticStore.getState().setUserStatistic(statDB.sumAll());
+        useUserAchevementStore.getState().initAchvMapFromDB();
         if(data.isAttend) {
             useAttendPopupStore.getState().openPopup();
         }

@@ -26,8 +26,16 @@ declare global {
   }
 
   interface UserStatistic extends UserParam {
-    userId: string;
     statDate: string;
+  }
+
+  interface ChartDataItem {
+    data: number[];
+  }
+
+  interface ChartData {
+    labels: string[];
+    datasets: ChartDataItem[];
   }
 }
 

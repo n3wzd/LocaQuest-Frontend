@@ -4,7 +4,8 @@ import useUserAchievementStore from '@/src/stores/user-achievement';
 import styles from '@/src/styles/common';
 
 export default () => {
-    const { userAchvList } = useUserAchievementStore();
+    const { getUserAchvList } = useUserAchievementStore();
+    const userAchvList = getUserAchvList();
     const cnt = userAchvList.filter(achv => achv.progress === 100).length ?? 0;
     return (
         <View style={{ ...styles.screen, padding: 10 }}>

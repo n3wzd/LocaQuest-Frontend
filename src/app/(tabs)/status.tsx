@@ -14,9 +14,10 @@ import InfoBlockContainer from '@/src/components/status/info-block-container';
 
 const ProfileScreen = () => {
   const { userStatistic } = useUserStatusStore();
-  const { userAchvList } = useUserAchevementStore();
+  const { getUserAchvList } = useUserAchevementStore();
   const [userName, setUserName] = useState<string>("");
   const userImage = Asset.fromModule(require('@/assets/achievements/1.png')).uri;
+  const userAchvList = getUserAchvList();
 
   useEffect(() => {
     const init = async () => {

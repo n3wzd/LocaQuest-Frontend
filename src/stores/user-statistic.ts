@@ -13,6 +13,7 @@ interface UserStatisticStore {
   userStatistic: UserStatisticStoreData;
   setUserStatistic: (data: StoreParam) => void;
   addUserStatistic: (data: StoreParam) => void;
+  resetUserStatistic: () => void;
 }
 
 const makeData = (param: StoreParam): UserStatisticStoreData => {
@@ -44,6 +45,7 @@ const useUserStatusStore = create<UserStatisticStore>((set, get) => ({
       set({ userStatistic: makeData(param) });
     }
   },
+  resetUserStatistic: () => makeData({ steps: 0, exp: 0, distance: 0 }),
 }));
 
 export default useUserStatusStore;

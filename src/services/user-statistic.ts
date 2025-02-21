@@ -4,8 +4,10 @@ import useUserStatisticStore from '@/src/stores/user-statistic';
 import useAttendPopupStore from '@/src/stores/attend-popup';
 
 const TABLE_NAME = 'user_statistics';
-let userParamSum: UserParam = { exp: 0, steps: 0, distance: 0 };
 let attendDate: string = format.getToday();
+
+const resetSql = `DROP TABLE IF EXISTS ${TABLE_NAME};`;
+db.execSync(resetSql);
 
 const createTableSql = `CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
       exp INTEGER DEFAULT 0,
@@ -19,12 +21,8 @@ db.execSync(createTableSql);
 const insert = (userStatistic: UserStatistic) => {
   const { exp, steps, distance, statDate } = userStatistic;
   const sql = `INSERT OR REPLACE INTO ${TABLE_NAME} (exp, steps, distance, stat_date)
-      VALUES (${exp}, ${steps}, ${distance}, ${statDate});`;
+      VALUES (${exp}, ${steps}, ${distance}, '${statDate}');`;
   db.execSync(sql);
-  
-  userParamSum.exp += exp;
-  userParamSum.steps += steps;
-  userParamSum.distance += distance;
 }
 
 const insertAll = (userStatisticList: UserStatistic[]) => {
@@ -34,29 +32,35 @@ const insertAll = (userStatisticList: UserStatistic[]) => {
 }
 
 const selectByDate = (date: string) => {
-  const sql = `SELECT * FROM ${TABLE_NAME} WHERE stat_date=${date}`;
+  const sql = `SELECT exp, steps, distance, stat_date AS statDate FROM ${TABLE_NAME} WHERE stat_date='${date}'`;
   return (db.getAllSync(sql) as UserStatistic[])[0];
 }
 
 const selectByRange = (start_date: string, end_date: string) => {
-  const sql = `SELECT * FROM ${TABLE_NAME} WHERE stat_date BETWEEN ${start_date} AND ${end_date}`;
+  const sql = `SELECT exp, steps, distance, stat_date AS statDate FROM ${TABLE_NAME} 
+      WHERE stat_date BETWEEN '${start_date}' AND '${end_date}' ORDER BY stat_date ASC`;
   return (db.getAllSync(sql) as UserStatistic[]);
 }
 
 const selectAll = () => {
-  const sql = `SELECT * FROM ${TABLE_NAME}`;
+  const sql = `SELECT exp, steps, distance, stat_date AS statDate FROM ${TABLE_NAME}`;
   return db.getAllSync(sql) as UserStatistic[];
+}
+
+const sumAll = () => {
+  const sql = `SELECT SUM(exp) as exp, SUM(steps) as steps, SUM(distance) as distance FROM ${TABLE_NAME};`;
+  return (db.getAllSync(sql) as UserStatistic[])[0];
 }
 
 const finishDay = (date: string) => {
   const stat = useUserStatisticStore.getState().userStatistic;
   const dateStat = selectByDate(date);
+  const sum = sumAll();
   const delta: UserStatistic = {
-    exp: stat.exp - userParamSum.exp + dateStat.exp,
-    steps: stat.steps - userParamSum.steps + dateStat.steps,
-    distance: stat.distance - userParamSum.distance + dateStat.distance,
+    exp: stat.exp - sum.exp + dateStat.exp,
+    steps: stat.steps - sum.steps + dateStat.steps,
+    distance: stat.distance - sum.distance + dateStat.distance,
     statDate: date,
-    userId: '',
   };
   insert(delta);
   useAttendPopupStore.getState().openPopup();
@@ -79,5 +83,5 @@ export default {
   selectByRange: selectByRange,
   setAttendDate: setAttendDate,
   updateAttend: updateAttend,
-  userParamSum: userParamSum,
+  sumAll: sumAll,
 }

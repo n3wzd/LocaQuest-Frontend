@@ -1,42 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import React from 'react';
+import { View, Button, ScrollView } from 'react-native';
 import styles from '@/src/styles/common';
 import tokenManager from '@/src/utils/token';
 import { useRouter } from 'expo-router';
-import statDB from '@/src/services/user-statistic';
-import BarChart from '@/src/components/chart/chart';
-import format from '@/src/utils/date';
+import BarChart from '@/src/components/chart/bar-chart';
+import LineChart from '@/src/components/chart/line-chart';
+import ChartWrapper from '@/src/components/chart/chart-wrapper';
+import useUserStatusStore from '@/src/stores/user-statistic';
+import chart from '@/src/services/chart';
 
 export default () => {
   const router = useRouter();
-  const [chartData, setChartData] = useState<ChartData>();
-  const CHART_COLUMN = 7;
-
+  const { userStatistic } = useUserStatusStore();
+  
   const handleLogout = async () => {
     await tokenManager.removeToken();
     router.push('/');
   }
-
-  useEffect(() => {
-    const statList = statDB.selectByRange(format.getDateFromToday(-CHART_COLUMN + 1), format.getToday());
-    const datas: number[] = [];
-
-    for(let i = 0; i < CHART_COLUMN; i++) {
-      const item = statList.find(item => item.statDate === format.getDateFromToday(i - CHART_COLUMN + 1));
-      datas.push(item ? item.exp : 0);
-    }
-
-    setChartData({
-      labels: Array.from({ length: CHART_COLUMN }, (_, i) => format.getDateFromToday(i - CHART_COLUMN + 1).substring(5)),
-      datasets: [ { data: datas } ],
-    });
-  }, []);
+  const chartData1 = chart.getRecentData(userStatistic, 'exp');
+  const chartData2 = chart.getRangeData(userStatistic, 'exp', 'avg', 'month1');
+  const chartData3 = chart.getRangeData(userStatistic, 'exp', 'sum', 'month1');
 
   return (
-    chartData && <View style={styles.container}>
+    <View style={styles.screen}>
       <Button title="로그아웃" onPress={handleLogout} />
-      <Text style={styles.boldText}>날짜별 데이터</Text>
-      <BarChart data={chartData} />
+      {chartData1 && chartData2 && chartData3 ? 
+        <ScrollView contentContainerStyle={styles.columnContainer}>
+          <ChartWrapper title="날짜별 데이터 1">
+            <BarChart chartData={chartData1} />
+          </ChartWrapper>
+          <ChartWrapper title="날짜별 데이터 2">
+            <LineChart chartData={chartData2} />
+          </ChartWrapper>
+          <ChartWrapper title="날짜별 데이터 3">
+            <LineChart chartData={chartData3} />
+          </ChartWrapper>
+        </ScrollView> : null}
     </View>
   );
 }

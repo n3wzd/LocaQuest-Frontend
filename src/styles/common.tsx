@@ -9,10 +9,19 @@ export default StyleSheet.create({
     container: {
         padding: 15,
         borderRadius: 10,
+    },
+    containerDesigned: {
+        padding: 15,
+        borderRadius: 10,
         boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
     },
     rowContainer: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    columnContainer: {
+        flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
     },

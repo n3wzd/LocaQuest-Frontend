@@ -31,7 +31,7 @@ const ProfileScreen = () => {
       <View style={styles.screen}>
         <ScrollView contentContainerStyle={{ padding: 15 }}>
           <Profile name={userName} imageUri={userImage} />
-          <Level level={userStatistic.level} exp={userStatistic.exp} expCurTo={userStatistic.expCurTo} expNextTo={userStatistic.expNextTo} />
+          <Level exp={userStatistic.exp} />
           <View style={{ marginBottom: 20 }}>
             <InfoBlockContainer steps={userStatistic.steps} distance={userStatistic.distance}/>
           </View>

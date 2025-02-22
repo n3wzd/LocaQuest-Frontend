@@ -10,6 +10,8 @@ declare global {
     distance: number;
   }
 
+  type UserParamProperty = "exp" | "steps" | "distance";
+
   interface Achievement {
     achvId: string;
     name: string;

@@ -18,13 +18,13 @@ const barStyles = StyleSheet.create({
     progressBar: {
       width: '100%',
       height: 8,
-      backgroundColor: theme.colors.darkSpace,
+      backgroundColor: theme.colors.black,
       borderRadius: 4,
       marginTop: 4,
       overflow: 'hidden',
     },
     progressFill: {
       height: '100%',
-      backgroundColor: theme.colors.lightWine,
+      backgroundColor: theme.colors.lightCyan,
     }
   });

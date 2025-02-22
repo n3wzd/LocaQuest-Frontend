@@ -19,7 +19,7 @@ export default ({ achievement }: { achievement: UserAchievementListItem }) => {
       </View>
       {achievement.achievedAt ? (
         <View style={{alignItems: 'center'}}>
-          <Text style={{ ...styles.boldText, color: theme.colors.lightWine }}>완료!</Text>
+          <Text style={{ ...styles.boldText, color: theme.colors.lightCyan }}>완료!</Text>
           <Text style={ styles.subText }>{ Formater.formatDateLetter(achievement.achievedAt) } 달성</Text>
         </View>
       ) : (

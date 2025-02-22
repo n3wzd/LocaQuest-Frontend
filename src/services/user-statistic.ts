@@ -6,6 +6,16 @@ import useAttendPopupStore from '@/src/stores/attend-popup';
 const TABLE_NAME = 'user_statistics';
 let attendDate: string = format.getToday();
 
+let sumAllCache: UserStatistic | null = null;
+let dataRangeCache = new Map<string, UserStatistic[]>();
+let allCache: UserStatistic[] | null = null;
+const createKeyDataRangeCache = (lo: string, hi: string) => `${lo}:${hi}`;
+const cleanCache = () => {
+  sumAllCache = null;
+  dataRangeCache = new Map();
+  allCache = null;
+}
+
 const resetSql = `DROP TABLE IF EXISTS ${TABLE_NAME};`;
 db.execSync(resetSql);
 
@@ -23,6 +33,7 @@ const insert = (userStatistic: UserStatistic) => {
   const sql = `INSERT OR REPLACE INTO ${TABLE_NAME} (exp, steps, distance, stat_date)
       VALUES (${exp}, ${steps}, ${distance}, '${statDate}');`;
   db.execSync(sql);
+  cleanCache();
 }
 
 const insertAll = (userStatisticList: UserStatistic[]) => {
@@ -37,19 +48,32 @@ const selectByDate = (date: string) => {
 }
 
 const selectByRange = (start_date: string, end_date: string) => {
+  const cacheKey = createKeyDataRangeCache(start_date, end_date);
+  const cache = dataRangeCache.get(cacheKey);
+  if(cache) {
+    return cache;
+  }
   const sql = `SELECT exp, steps, distance, stat_date AS statDate FROM ${TABLE_NAME} 
       WHERE stat_date BETWEEN '${start_date}' AND '${end_date}' ORDER BY stat_date ASC`;
-  return (db.getAllSync(sql) as UserStatistic[]);
+  const res = (db.getAllSync(sql) as UserStatistic[]);
+  dataRangeCache.set(cacheKey, res);
+  return res;
 }
 
 const selectAll = () => {
+  if(allCache) {
+    return allCache;
+  }
   const sql = `SELECT exp, steps, distance, stat_date AS statDate FROM ${TABLE_NAME}`;
-  return db.getAllSync(sql) as UserStatistic[];
+  return allCache = db.getAllSync(sql) as UserStatistic[];
 }
 
 const sumAll = () => {
+  if(sumAllCache) {
+    return sumAllCache;
+  }
   const sql = `SELECT SUM(exp) as exp, SUM(steps) as steps, SUM(distance) as distance FROM ${TABLE_NAME};`;
-  return (db.getAllSync(sql) as UserStatistic[])[0];
+  return sumAllCache = (db.getAllSync(sql) as UserStatistic[])[0];
 }
 
 const finishDay = (date: string) => {

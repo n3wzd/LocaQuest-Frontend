@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { useController } from 'react-hook-form';
+import styles from '@/src/styles/form';
 
 interface NameInputProps {
   control: any;
@@ -27,13 +28,13 @@ const NameInput = ({ control, errors }: NameInputProps) => {
   return (
     <View>
       <TextInput
-        style={{ borderWidth: 1, padding: 10, marginBottom: 20 }}
+        style={styles.input}
         placeholder="이름 입력"
         onChangeText={field.onChange}
         {...field}
       />
       {errors.name && typeof errors.name.message === 'string' && (
-        <Text style={{ color: 'red' }}>{errors.name.message}</Text>
+        <Text style={styles.warnText}>{errors.name.message}</Text>
       )}
     </View>
   );

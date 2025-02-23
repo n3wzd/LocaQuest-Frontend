@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { useController } from 'react-hook-form';
+import styles from '@/src/styles/form';
 
 interface EmailInputProps {
   control: any;
@@ -27,14 +28,14 @@ export default ({ control, errors }: EmailInputProps) => {
   return (
     <View>
       <TextInput
-        style={{ borderWidth: 1, padding: 10, marginBottom: 20 }}
+        style={styles.input}
         placeholder="이메일 입력"
         keyboardType="email-address"
         onChangeText={field.onChange}
         {...field}
       />
       {errors.email && typeof errors.email.message === 'string' && (
-        <Text style={{ color: 'red' }}>{errors.email.message}</Text>
+        <Text style={styles.warnText}>{errors.email.message}</Text>
       )}
     </View>
   );

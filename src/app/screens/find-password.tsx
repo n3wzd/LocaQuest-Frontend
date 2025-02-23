@@ -19,10 +19,12 @@ export default function FindIdPage() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>비밀번호 찾기</Text>
-      <EmailInput value={email} onChangeText={setEmail} />
-      <LoadingButton title="확인" onPress={handleFindId} />
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.title}>비밀번호 찾기</Text>
+        <EmailInput value={email} onChangeText={setEmail} />
+        <LoadingButton title="확인" onPress={handleFindId} />
+      </View>
     </View>
   );
 }

@@ -15,10 +15,12 @@ export default () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>회원 탈퇴</Text>
-      <PasswordInput value={password} onChangeText={setPassword} />
-      <LoadingButton title="탈퇴" onPress={onSubmit} />
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.title}>회원 탈퇴</Text>
+        <PasswordInput value={password} onChangeText={setPassword} />
+        <LoadingButton title="탈퇴" onPress={onSubmit} />
+      </View>
     </View>
   );
 };

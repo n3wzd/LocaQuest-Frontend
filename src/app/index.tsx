@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import Login from '@/src/app/screens/login';
 import tokenManager from '@/src/utils/token';
+import useUserDataStore from '@/src/stores/user-data';
 import { startBackgroundLocation } from '@/src/services/location';
 import { useRouter } from 'expo-router';
 import LoadingButton from '@/src/components/input/loading-button';
@@ -12,6 +13,7 @@ import { receiveRsmPublicKey, startApi } from '@/src/api/init';
 export default () => {
   const [mode, setMode] = useState(0);
   const router = useRouter();
+  const { setUserDataFromToken } = useUserDataStore();
   
   useEffect(() => {
     init();
@@ -26,6 +28,7 @@ export default () => {
         await startStepCounter();
         const granted = await startBackgroundLocation();
         if(granted) {
+          await setUserDataFromToken();
           router.push('/(tabs)/quest');
         } else {
           setMode(2);

@@ -54,7 +54,7 @@ const useUserAchievementStore = create<UserAchievementStore>((set, get) => ({
     set(({ userAchvMap: datas }));
   },
   getUserAchvList: () => [...get().userAchvMap.values()],
-  resetUserAchvMap: () => set(() => ({ userAchvMap: new Map() })),
+  resetUserAchvMap: () => set({ userAchvMap: new Map() }),
 }));
 
 export default useUserAchievementStore;

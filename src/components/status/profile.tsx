@@ -6,8 +6,8 @@ import styles from '@/src/styles/common';
 export default ({ name, imageUri }: { name: string; imageUri: string }) => {
   return (
     <View style={[styles.container, {alignItems: 'center'}]}>
-      <ProfileImage uri={imageUri} />
-      <Text style={styles.boldText}>{name}</Text>
+      <ProfileImage uri={imageUri} radius={80} />
+      <Text style={[styles.boldText, { marginTop: 10 }]}>{name}</Text>
     </View>
   );
 };

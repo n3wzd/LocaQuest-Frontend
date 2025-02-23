@@ -7,11 +7,13 @@ const TABLE_NAME = 'user_statistics';
 let attendDate: string = format.getToday();
 
 let sumAllCache: UserStatistic | null = null;
+let dataSingleCache = new Map<string, UserStatistic>();
 let dataRangeCache = new Map<string, UserStatistic[]>();
 let allCache: UserStatistic[] | null = null;
 const createKeyDataRangeCache = (lo: string, hi: string) => `${lo}:${hi}`;
 const cleanCache = () => {
   sumAllCache = null;
+  dataSingleCache = new Map();
   dataRangeCache = new Map();
   allCache = null;
 }
@@ -43,8 +45,14 @@ const insertAll = (userStatisticList: UserStatistic[]) => {
 }
 
 const selectByDate = (date: string) => {
+  const cache = dataSingleCache.get(date);
+  if(cache) {
+    return cache;
+  }
   const sql = `SELECT exp, steps, distance, stat_date AS statDate FROM ${TABLE_NAME} WHERE stat_date='${date}'`;
-  return (db.getAllSync(sql) as UserStatistic[])[0];
+  const res = (db.getAllSync(sql) as UserStatistic[])[0];
+  dataSingleCache.set(date, res);
+  return res;
 }
 
 const selectByRange = (start_date: string, end_date: string) => {
@@ -76,17 +84,20 @@ const sumAll = () => {
   return sumAllCache = (db.getAllSync(sql) as UserStatistic[])[0];
 }
 
-const finishDay = (date: string) => {
+const getRecentStatistic = (date: string = format.getToday()) => {
   const stat = useUserStatisticStore.getState().userStatistic;
   const dateStat = selectByDate(date);
   const sum = sumAll();
-  const delta: UserStatistic = {
+  return {
     exp: stat.exp - sum.exp + dateStat.exp,
     steps: stat.steps - sum.steps + dateStat.steps,
     distance: stat.distance - sum.distance + dateStat.distance,
     statDate: date,
   };
-  insert(delta);
+}
+
+const finishDay = (date: string) => {
+  insert(getRecentStatistic(date));
   useAttendPopupStore.getState().openPopup();
 }
 
@@ -99,6 +110,7 @@ const updateAttend = () => {
 }
 
 const setAttendDate = (date: string) => attendDate = date;
+const getTodayStatistic = () => getRecentStatistic(format.getToday());
 
 export default {
   insert: insert,
@@ -108,4 +120,5 @@ export default {
   setAttendDate: setAttendDate,
   updateAttend: updateAttend,
   sumAll: sumAll,
+  getTodayStatistic: getTodayStatistic,
 }

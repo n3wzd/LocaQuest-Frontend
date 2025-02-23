@@ -21,6 +21,8 @@ export const getExpLimit = (level: number) => {
   return Math.floor(a * Math.pow(level, 2) + b * level + c);
 }
 
+export const getExpCurTo = (exp: number) => getExpLimit(getLevel(exp));
+
 export const getExpNextTo = (exp: number) => {
   const level = getLevel(exp);
   if(GAME.MAX_LEVEL === level) {
@@ -28,6 +30,13 @@ export const getExpNextTo = (exp: number) => {
   }
   const nextExp = getExpLimit(level + 1);
   return nextExp - exp;
+}
+
+export const getExpProgress = (exp: number) => {
+  const expCurTo = getExpCurTo(exp);
+  const expNextTo = getExpNextTo(exp);
+  return expNextTo === 0 ? 100 : 
+    (exp - expCurTo) / (exp + expNextTo) * 100;
 }
 
 export const getAchievementProgress = (achvId: number, userParam: UserParam) => {

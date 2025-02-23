@@ -1,9 +1,4 @@
 declare global {
-  interface UserData {
-    sub: string;
-    name: string;
-  }
-  
   interface UserParam {
     steps: number;
     exp: number;
@@ -11,6 +6,7 @@ declare global {
   }
 
   type UserParamProperty = "exp" | "steps" | "distance";
+  type DateRangeType = "week1" | "week2" | "month1" | "month3" | "month6" | "year1";
 
   interface Achievement {
     achvId: string;

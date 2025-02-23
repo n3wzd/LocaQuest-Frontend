@@ -1,36 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import Profile from '@/src/components/status/profile';
 import Level from '@/src/components/status/level';
 import BadgesList from '@/src/components/status/badge-list';
 import AchievementList from '@/src/components/status/achievement-list';
-import tokenManager from '@/src/utils/token';
+import useUserDataStore from '@/src/stores/user-data';
 import useUserStatusStore from '@/src/stores/user-statistic';
 import useUserAchevementStore from '@/src/stores/user-achievement';
 import styles from '@/src/styles/common';
 import { Link } from 'expo-router';
-import { Asset } from 'expo-asset';
 import InfoBlockContainer from '@/src/components/status/info-block-container';
 
 const ProfileScreen = () => {
   const { userStatistic } = useUserStatusStore();
+  const { userData } = useUserDataStore();
   const { getUserAchvList } = useUserAchevementStore();
-  const [userName, setUserName] = useState<string>("");
-  const userImage = Asset.fromModule(require('@/assets/achievements/1.png')).uri;
   const userAchvList = getUserAchvList();
-
-  useEffect(() => {
-    const init = async () => {
-      setUserName(await tokenManager.getUserName());
-    }
-    init();
-  }, []);
 
   return (
     userStatistic ? (
       <View style={styles.screen}>
         <ScrollView contentContainerStyle={{ padding: 15 }}>
-          <Profile name={userName} imageUri={userImage} />
+          <Profile name={userData.name} imageUri={userData.profilePictureUri} />
           <Level exp={userStatistic.exp} />
           <View style={{ marginBottom: 20 }}>
             <InfoBlockContainer steps={userStatistic.steps} distance={userStatistic.distance}/>

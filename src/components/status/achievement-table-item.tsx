@@ -23,7 +23,7 @@ export default ({ achievement }: { achievement: UserAchievementListItem }) => {
           <Text style={ styles.subText }>{ Formater.formatDateLetter(achievement.achievedAt) } 달성</Text>
         </View>
       ) : (
-        <ProgressBar gauge={achievement.progress} />
+        <ProgressBar gauge={achievement.progress} outline={false} />
       )}
     </View>
   );

@@ -28,13 +28,13 @@ export default () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>회원정보 수정</Text>
-
-      <PasswordInput control={control} errors={errors} watch={watch}/>
-      <NameInput control={control} errors={errors}/>
-
-      <LoadingButton title="수정" onPress={handleSubmit(onSubmit)} />
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={[styles.title, { marginBottom: 10 }]}>회원정보 수정</Text>
+        <PasswordInput control={control} errors={errors} watch={watch}/>
+        <NameInput control={control} errors={errors}/>
+        <LoadingButton title="수정" onPress={handleSubmit(onSubmit)} />
+      </View>
     </View>
   );
 };

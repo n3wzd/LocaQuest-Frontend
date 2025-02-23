@@ -30,14 +30,14 @@ export default () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome To LocaQuest!</Text>
-
-      <EmailInput control={control} errors={errors}/>
-      <PasswordInput control={control} errors={errors} watch={watch}/>
-      <NameInput control={control} errors={errors}/>
-
-      <LoadingButton title="가입" onPress={handleSubmit(onSubmit)} />
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Welcome To LocaQuest!</Text>
+        <EmailInput control={control} errors={errors}/>
+        <PasswordInput control={control} errors={errors} watch={watch}/>
+        <NameInput control={control} errors={errors}/>
+        <LoadingButton title="가입" onPress={handleSubmit(onSubmit)} />
+      </View>
     </View>
   );
 };

@@ -23,7 +23,7 @@ export default ({ chartData }: { chartData: ChartData }) => {
                 fillShadowGradientToOpacity: 0.9,
                 color: () => theme.colors.lightCyan,
                 labelColor: () => theme.colors.white, 
-                barPercentage: 0.7,
+                barPercentage: 0.5,
                 decimalPlaces: 0,
                 barRadius: 12,
                 propsForBackgroundLines: {

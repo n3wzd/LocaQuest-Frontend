@@ -1,15 +1,16 @@
 import statDB from '@/src/services/user-statistic';
 import format from '@/src/utils/date';
+import useUserStatisticStore from '@/src/stores/user-statistic';
 
-const getRecentData = (userParam: UserParam, prop: UserParamProperty): ChartData => {
+const getRecentData = (prop: UserParamProperty): ChartData => {
     const CHART_COLUMN = 7;
     const statList = statDB.selectByRange(format.getDateFromToday(-CHART_COLUMN + 1), format.getToday());
     const datas: number[] = [];
-    const todayProp = userParam[prop] - statDB.sumAll()[prop];
+    const todayDeltaProp = useUserStatisticStore.getState().userStatistic[prop] - statDB.sumAll()[prop];
     for(let i = 0; i < CHART_COLUMN; i++) {
         const day = i - CHART_COLUMN + 1;
         const item = statList.find(item => item.statDate === format.getDateFromToday(day));
-        datas.push((item ? item[prop] : 0) + (day === 0 ? todayProp : 0));
+        datas.push((item ? item[prop] : 0) + (day === 0 ? todayDeltaProp : 0));
     }
     return {
         labels: Array.from({ length: CHART_COLUMN }, (_, i) => format.getDateFromToday(i - CHART_COLUMN + 1).substring(5)),
@@ -17,7 +18,6 @@ const getRecentData = (userParam: UserParam, prop: UserParamProperty): ChartData
     };
 }
 
-type RangeDataRangeParam = "week1" | "week2" | "month1" | "month3" | "month6" | "year1";
 type RangeDataValueParam = "avg" | "sum";
 const deltaDayMap = {
     week1: 7,
@@ -27,18 +27,18 @@ const deltaDayMap = {
     month6: 180,
     year1: 365,
 }
-const getRangeData = (userParam: UserParam, prop: UserParamProperty, valueType: RangeDataValueParam, rangeType: RangeDataRangeParam): ChartData => {
-    const CHART_COLUMN = 6;
+const getRangeData = (prop: UserParamProperty, valueType: RangeDataValueParam, rangeType: DateRangeType): ChartData => {
+    const CHART_COLUMN = 7;
     const dateSize = deltaDayMap[rangeType];
     const statList = statDB.selectByRange(format.getDateFromToday(-dateSize + 1), format.getToday());
     const labels: string[] = [];
     const datas: number[] = [];
-    const todayProp = userParam[prop] - statDB.sumAll()[prop];
+    const todayDeltaProp = useUserStatisticStore.getState().userStatistic[prop] - statDB.sumAll()[prop];
 
     let sum = 0, statListIdx = 0, columnIdx = 1;
     for(let i = 1; i <= dateSize; i++) {
         if(statList[statListIdx].statDate === format.getDateFromToday(i - dateSize)) {
-            sum += statList[statListIdx][prop] + (i === dateSize ? todayProp : 0);
+            sum += statList[statListIdx][prop] + (i === dateSize ? todayDeltaProp : 0);
             statListIdx++;
         }
         if(i * CHART_COLUMN >= columnIdx * dateSize) { //  i / dateSize >= columnIdx / CHART_COLUMN

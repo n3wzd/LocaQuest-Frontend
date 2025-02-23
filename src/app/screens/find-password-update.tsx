@@ -27,10 +27,12 @@ export default () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>비밀번호 변경</Text>
-      <PasswordInput control={control} errors={errors} watch={watch}/>
-      <LoadingButton title="변경" onPress={handleSubmit(onSubmit)} />
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.title}>비밀번호 변경</Text>
+        <PasswordInput control={control} errors={errors} watch={watch}/>
+        <LoadingButton title="변경" onPress={handleSubmit(onSubmit)} />
+      </View>
     </View>
   );
 };

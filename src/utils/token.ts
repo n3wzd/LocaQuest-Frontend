@@ -1,6 +1,11 @@
 import store from '../libs/secure-store';
 import jwt from '../libs/jwt';
 
+interface UserData {
+    sub: string;
+    name: string;
+}
+
 const STORAGE_TOKEN_KEY = 'user_token';
 
 const saveToken = async (token: string) => {

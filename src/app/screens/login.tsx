@@ -21,16 +21,16 @@ export default function LoginPage() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-
-      <EmailInput value={email} onChangeText={setEmail} />
-      <PasswordInput value={password} onChangeText={setPassword} />
-      <LoadingButton title="Login" onPress={handleLogin} />
-
-      <Text onPress={() => router.push('/screens/signup')}>
-        Sign up
-      </Text>
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Login</Text>
+        <EmailInput value={email} onChangeText={setEmail} />
+        <PasswordInput value={password} onChangeText={setPassword} />
+        <LoadingButton title="Login" onPress={handleLogin} />
+        <Text onPress={() => router.push('/screens/signup')} style={{ marginTop: 4 }}>
+          회원가입
+        </Text>
+      </View>
     </View>
   );
 }

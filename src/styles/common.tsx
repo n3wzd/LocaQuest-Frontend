@@ -69,9 +69,6 @@ export default StyleSheet.create({
         marginTop: 5,
     },
     profileImage: {
-        width: 50,
-        height: 50,
         borderRadius: 50,
-        marginBottom: 10,
     },
   });

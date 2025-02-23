@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { useController } from 'react-hook-form';
+import styles from '@/src/styles/form';
+import theme from '@/src/styles/theme';
 
 interface PasswordInputProps {
   control: any;
@@ -41,24 +43,24 @@ const PasswordInput = ({ control, errors, watch }: PasswordInputProps) => {
   return (
     <View>
       <TextInput
-        style={{ borderWidth: 1, padding: 10, marginBottom: 20 }}
+        style={styles.input}
         placeholder="비밀번호 입력"
         onChangeText={passwordField.onChange}
         secureTextEntry
         {...passwordField}
       />
       {errors.password && typeof errors.password.message === 'string' && (
-        <Text style={{ color: 'red' }}>{errors.password.message}</Text>
+        <Text style={styles.warnText}>{errors.password.message}</Text>
       )}
       <TextInput
-        style={{ borderWidth: 1, padding: 10, marginBottom: 20 }}
+        style={styles.input}
         placeholder="비밀번호 확인"
         onChangeText={confirmPasswordField.onChange}
         secureTextEntry
         {...confirmPasswordField}
       />
       {errors.confirmPassword && typeof errors.confirmPassword.message === 'string' && (
-        <Text style={{ color: 'red' }}>{errors.confirmPassword.message}</Text>
+        <Text style={styles.warnText}>{errors.confirmPassword.message}</Text>
       )}
     </View>
   );

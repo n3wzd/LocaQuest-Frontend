@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import LoadingButton from '@/src/components/input/loading-button';
 import { updatePasswordCheckVerified } from '@/src/api/user';
+import styles from '@/src/styles/form';
 
 export default () => {
   const router = useRouter();
@@ -13,11 +14,13 @@ export default () => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text style={{ fontSize: 18, marginBottom: 20 }}>
-        인증 메일을 확인해주세요!
-      </Text>
-      <LoadingButton title="확인" onPress={checkEmailVerification} />
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <Text style={[styles.text, { fontSize: 18, marginBottom: 20 }]}>
+          인증 메일을 확인해주세요!
+        </Text>
+        <LoadingButton title="확인" onPress={checkEmailVerification} />
+      </View>
     </View>
   );
 };

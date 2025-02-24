@@ -20,7 +20,7 @@ export default ({ icon, text, onPress }: { icon?: string, text: string, onPress:
                 color={getColor()}
                 style={{ marginRight: 5 }}
             />) : null}
-            <Text style={[styles.text, { marginLeft: 4, marginBottom: 2, color: getColor() }]}>{text}</Text>
+            <Text style={[styles.text, { fontSize: 16, marginLeft: 8, marginBottom: 2, color: getColor() }]}>{text}</Text>
         </TouchableOpacity>
     );
 };

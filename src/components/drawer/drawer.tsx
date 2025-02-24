@@ -5,18 +5,20 @@ import theme from '@/src/styles/theme';
 import useDrawerStore from '@/src/stores/drawer';
 import Animated, { useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProfileImage from '../status/profile-image';
 import useUserDataStore from '@/src/stores/user-data';
+import useUserStatisticStore from '@/src/stores/user-statistic';
 import DrawerItem from '@/src/components/drawer/drawer-item';
 import Seperator from '@/src/components/drawer/drawer-seperator';
 import tokenManager from '@/src/utils/token';
 import { useRouter } from 'expo-router';
+import ProfileBar from '../status/profile-bar';
 
 const { width } = Dimensions.get("window");
 const ANIMATION_DURATION = 300;
 
 export default () => {
     const router = useRouter();
+    const { userStatistic } = useUserStatisticStore();
     const { userData } = useUserDataStore();
     const { visibleDrawer, closeDrawer } = useDrawerStore();
     const animation = useSharedValue(0);
@@ -49,18 +51,21 @@ export default () => {
     return visibleDrawer ? (
         <TouchableWithoutFeedback onPress={onClose}>
             <Animated.View style={[drawerStyles.overlay, overlayAnimatedStyle]}>
-                <Animated.View style={[drawerStyles.drawer, drawerAnimatedStyle]}>
-                    <ProfileImage uri={userData.profilePictureUri} radius={45}/>
-                    <Text style={[styles.text]}>{userData.name}</Text>
-                    <TouchableOpacity onPress={onClose} style={drawerStyles.closeButton}>
-                        <Ionicons name="close" color={theme.colors.lightGrey} size={24} />
-                    </TouchableOpacity>
-                    <View style={[styles.columnContainer, { alignItems: "flex-start" }]}>
-                        <DrawerItem text='프로필 변경' icon='pencil' onPress={handleProfileEdit}/>
-                        <Seperator/>
-                        <DrawerItem text='로그아웃' icon='backspace-outline' onPress={handleLogout}/>
-                    </View>
-                </Animated.View>
+                <TouchableWithoutFeedback>
+                    <Animated.View style={[drawerStyles.drawer, drawerAnimatedStyle]}>
+                        <TouchableOpacity onPress={onClose} style={drawerStyles.closeButton}>
+                            <Ionicons name="close" color={theme.colors.lightGrey} size={24} />
+                        </TouchableOpacity>
+                        <View style={{ width: '50%', padding: 10 }}>
+                            <ProfileBar userStatistic={userStatistic} userData={userData} ></ProfileBar>
+                        </View>
+                        <View style={[styles.columnContainer, { alignItems: "flex-start" }]}>
+                            <DrawerItem text='프로필 변경' icon='pencil' onPress={handleProfileEdit}/>
+                            <Seperator/>
+                            <DrawerItem text='로그아웃' icon='backspace-outline' onPress={handleLogout}/>
+                        </View>
+                    </Animated.View>
+                </TouchableWithoutFeedback>
             </Animated.View>
         </TouchableWithoutFeedback>
     ) : null;
@@ -71,17 +76,18 @@ const drawerStyles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         right: 0,
-        width: 240,
+        width: 260,
         height: '100%',
         backgroundColor: theme.colors.darkSpace,
         borderRightWidth: 1,
-        paddingTop: 60,
+        paddingTop: 10,
+        zIndex: 2,
     },
     overlay: { 
         position: "absolute", 
         width: "100%",
         height: "100%",
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: 'rgba(0,0,0,0.35)',
         justifyContent: "flex-start",
         zIndex: 1,
     },
@@ -89,7 +95,7 @@ const drawerStyles = StyleSheet.create({
         padding: 20,
         borderRadius: 5,
         position: 'absolute',
-        top: 30,
-        right: 20,
+        top: 0,
+        right: 0,
     },
 });

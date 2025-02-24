@@ -10,10 +10,15 @@ export default StyleSheet.create({
         padding: 15,
         borderRadius: 10,
     },
-    containerDesigned: {
+    containerSimple: {
         padding: 15,
         borderRadius: 10,
         boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
+    },
+    containerBlock: {
+        padding: 15, 
+        borderRadius: 12, 
+        backgroundColor: theme.colors.lightSpace,
     },
     rowContainer: {
         flexDirection: 'row',

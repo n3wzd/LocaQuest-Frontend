@@ -27,6 +27,12 @@ declare global {
     statDate: string;
   }
 
+  interface UserData {
+    userId: string,
+    name: string,
+    profilePictureUri: string,
+  }
+
   interface ChartDataItem {
     data: number[];
   }

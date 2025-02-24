@@ -12,6 +12,7 @@ export default {
     shadow: '#222222',
     disable: '#474747',
     transparent: '#00000000',
+    lightCyanLevel: ['#ffffff', '#b3f1fa', '#66e3f5', '#00c8ee', '#009ab7', '#006b80'],
   },
   fonts: {
     text: "Arial",

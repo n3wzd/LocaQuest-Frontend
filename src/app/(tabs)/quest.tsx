@@ -8,7 +8,7 @@ export default () => {
   return (
     <View style={ styles.screen }>
       <View style={{ position: 'absolute', alignItems: 'center', justifyContent: 'center', width: '100%', top: 12 }}>
-        <View style={[styles.containerDesigned, { width: '95%', height: 50, backgroundColor: theme.colors.white, zIndex: 2 }]}>
+        <View style={[styles.containerSimple, { width: '95%', height: 50, backgroundColor: theme.colors.white, zIndex: 2 }]}>
           <TouchableOpacity>
             <Text>☰</Text>
           </TouchableOpacity>

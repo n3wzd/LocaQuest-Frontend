@@ -3,11 +3,7 @@ import tokenManager from '@/src/utils/token';
 import { Asset } from 'expo-asset';
 
 interface UserDataStore {
-  userData: {
-    userId: string,
-    name: string,
-    profilePictureUri: string,
-  };
+  userData: UserData
   setUserDataFromToken: () => void
 }
 

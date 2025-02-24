@@ -10,6 +10,8 @@ import theme from '@/src/styles/theme';
 import ProgressBar from "../status/progress-bar";
 import statDB from '@/src/services/user-statistic';
 import InfoBlock from "../status/info-block";
+import NameBox from "../status/name-box";
+import ProfileBar from "../status/profile-bar";
 
 export default () => {
     const { userStatistic } = useUserStatusStore();
@@ -22,18 +24,9 @@ export default () => {
 
     return (
         <View style={toolbarStyles.toolbar}>
-            <ProfileImage uri={userData.profilePictureUri} radius={45}/>
-            <View style={[styles.columnContainer, { paddingHorizontal: 12 }]}>
-                <View style={toolbarStyles.namecard}>
-                    <Text style={[styles.text]}>{userData.name}</Text>
-                </View>
-                <View style={styles.rowContainer}>
-                    <Text style={[styles.subText, { marginRight: 8, marginTop: 3 }]}>Lv {level}</Text>
-                    <ProgressBar gauge={gauge} showValue={false} width={100}/>
-                </View>
-            </View>
+            <ProfileBar userStatistic={userStatistic} userData={userData} ></ProfileBar>
             <InfoBlock title="걸음수" value={curStat.steps}/>
-            <InfoBlock title="이동거리" value={curStat.distance}/>
+            <InfoBlock title="이동거리" value={`${curStat.distance}m`}/>
             <TouchableOpacity onPress={toggleDrawer}>
                 <Ionicons name="settings" size={28} color={theme.colors.lightCyan} />
             </TouchableOpacity>
@@ -47,17 +40,5 @@ const toolbarStyles = StyleSheet.create({
         paddingHorizontal: 6,
         backgroundColor: theme.colors.lightSpace,
         justifyContent: "flex-start"
-    },
-    namecard: {
-        backgroundColor: '#2c3e50', 
-        padding: 3, 
-        borderRadius: 10,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4
     },
 });

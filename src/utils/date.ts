@@ -21,7 +21,16 @@ const formatDate = (dateStr: string): string => {
   return formattedDate;
 }
 
+const getDiffDate = (startFormatDate: string, endFormatDate: string) => {
+  const date1 = new Date(endFormatDate);
+  const date2 = new Date(startFormatDate);
+  const diffTime = Math.abs(date1.getTime() - date2.getTime());
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+}
+
 const getToday = () => formatDate((new Date()).toString());
+
+const getDayOfWeek = () => (new Date()).getDay();
 
 const getDateFromToday = (day: number) => {
   const date = new Date();
@@ -33,5 +42,7 @@ export default {
   formatDateLetter: formatDateLetter,
   formatDate: formatDate,
   getToday: getToday,
+  getDayOfWeek: getDayOfWeek,
+  getDiffDate: getDiffDate,
   getDateFromToday: getDateFromToday,
 };

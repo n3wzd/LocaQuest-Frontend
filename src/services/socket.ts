@@ -34,13 +34,14 @@ ws.onerror = (error) => {
 
 ws.onmessage = (event) => {
     const data = JSON.parse(event.data as string) as Reponse;
-    useUserStatusStore.getState().addUserStatistic(data.deltaParam);
+    const deltaData = data.deltaParam;
+    useUserStatusStore.getState().addUserStatistic(deltaData);
     useUserAchevementStore.getState().updateAchvMapProgress();
     useUserAchevementStore.getState().addAchvMapAchvDate(data.newAchvList);
     useAchievementPopupStore.getState().newAchvQueueAppend(data.newAchvList);
     statDB.updateAttend();
     achvDB.insertAll(data.newAchvList);
-    setDistance(getDistance() - data.deltaParam.distance);
+    setDistance(getDistance() - deltaData.distance);
 };
 
 const send = async () => {

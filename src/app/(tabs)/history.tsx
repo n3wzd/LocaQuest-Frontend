@@ -7,11 +7,15 @@ import ChartWrapper from '@/src/components/chart/chart-wrapper';
 import useUserStatusStore from '@/src/stores/user-statistic';
 import chart from '@/src/services/chart';
 import ChoiceChips from '@/src/components/input/choice-chips';
+import GrassGrid from '@/src/components/chart/grass-grid';
+import statDB from '@/src/services/user-statistic';
+import format from '@/src/utils/date';
 
 export default () => {
   useUserStatusStore();
   const [ valueType, setValueType ] = useState<UserParamProperty>('exp');
   const [ rangeType, setRangeType ] = useState<DateRangeType>('week1');
+  const grassData = statDB.selectByRange(format.getDateFromToday(-90), format.getToday());
   const chartData = {
     recent: chart.getRecentData(valueType),
     avg: chart.getRangeData(valueType, 'avg', rangeType),
@@ -37,6 +41,7 @@ export default () => {
           <ChoiceChips options={rangeOptions} onChange={(value) => setRangeType(value as DateRangeType)}/>
         </View>
         <ScrollView contentContainerStyle={styles.columnContainer}>
+          <GrassGrid gridData={grassData}/>
           <ChartWrapper title="최근 1주일">
             <BarChart chartData={chartData.recent} />
           </ChartWrapper>

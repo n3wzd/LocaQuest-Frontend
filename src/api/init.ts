@@ -34,7 +34,7 @@ export const startApi = async () => {
 
         useUserStatisticStore.getState().resetUserStatistic();
         useUserAchevementStore.getState().resetUserAchvMap();
-        useUserStatisticStore.getState().setUserStatistic(statDB.sumAll());
+        useUserStatisticStore.getState().setUserStatistic({ statDate: format.getToday(), ...statDB.sumAll() });
         useUserAchevementStore.getState().initAchvMapFromDB();
         if(data.isAttend) {
             useAttendPopupStore.getState().openPopup();

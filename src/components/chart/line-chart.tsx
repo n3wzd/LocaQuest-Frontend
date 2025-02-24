@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Text } from 'react-native';
+import { Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import theme from '@/src/styles/theme';
 
@@ -12,7 +12,6 @@ export default ({ chartData }: { chartData: ChartData }) => {
             height={240}
             withVerticalLines={false}
             withHorizontalLabels={true}
-            // onDataPointClick={onClick}
             xLabelsOffset={6}
             yLabelsOffset={20}
             chartConfig={{
@@ -25,11 +24,13 @@ export default ({ chartData }: { chartData: ChartData }) => {
                 color: () => theme.colors.lightCyan,
                 labelColor: () => theme.colors.white, 
                 decimalPlaces: 0,
+                strokeWidth: 2,
                 propsForBackgroundLines: {
                     stroke: theme.colors.darkCyan,
                     strokeDasharray: "5, 5",
                     strokeWidth: 0.5,
                 },
+                
             }}
             style={{
                 width: width,

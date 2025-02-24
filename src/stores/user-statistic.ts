@@ -1,38 +1,30 @@
 import { create } from 'zustand';
-
-type StoreParam = UserParam | UserStatistic;
+import format from '@/src/utils/date';
 
 interface UserStatisticStore {
-  userStatistic: UserParam;
-  setUserStatistic: (data: StoreParam) => void;
-  addUserStatistic: (data: StoreParam) => void;
+  userStatistic: UserStatistic;
+  setUserStatistic: (data: UserStatistic) => void;
+  addUserStatistic: (data: UserStatistic | UserParam) => void;
   resetUserStatistic: () => void;
 }
 
-const makeData = (param: StoreParam) => ({
-    exp: param.exp,
-    steps: param.steps,
-    distance: param.distance,
-  })
+const makeInitData = () => ({ steps: 0, exp: 0, distance: 0, statDate: format.getToday() })
 
 const useUserStatusStore = create<UserStatisticStore>((set, get) => ({
-  userStatistic: { steps: 0, exp: 0, distance: 0 },
-  setUserStatistic: (param: StoreParam) => {
-    set({ userStatistic: makeData(param)});
+  userStatistic: makeInitData(),
+  setUserStatistic: (param: UserStatistic) => {
+    set({ userStatistic: param});
   },
-  addUserStatistic: (param: StoreParam) => {
+  addUserStatistic: (param: UserStatistic | UserParam) => {
     const userStatistic = get().userStatistic;
-    if(userStatistic) {
-      set({ userStatistic: {
-        exp: userStatistic.exp + param.exp,
-        steps: userStatistic.steps + param.steps,
-        distance: userStatistic.distance + param.distance,
-      } });
-    } else {
-      set({ userStatistic: makeData(param) });
-    }
+    set({ userStatistic: {
+      exp: userStatistic.exp + param.exp,
+      steps: userStatistic.steps + param.steps,
+      distance: userStatistic.distance + param.distance,
+      statDate: userStatistic.statDate
+    }});
   },
-  resetUserStatistic: () => set({ userStatistic: {steps: 0, exp: 0, distance: 0} }),
+  resetUserStatistic: () => set({ userStatistic: makeInitData() }),
 }));
 
 export default useUserStatusStore;

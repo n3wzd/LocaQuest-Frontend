@@ -35,7 +35,7 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: theme.colors.lightCyan,
+    backgroundColor: theme.colors.darkCyan,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

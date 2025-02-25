@@ -10,7 +10,7 @@ interface UserDataStore {
 const useUserStatusStore = create<UserDataStore>((set) => ({
   userData: { userId: "", name: "", profilePictureUri: "" },
   setUserDataFromToken: async () => {
-    const uri = Asset.fromModule(require('@/assets/achievements/1.png')).uri;
+    const uri = Asset.fromModule(require('@/assets/achievements/0.png')).uri;
     const data = {
       userId: await tokenManager.getUserId(),
       name: await tokenManager.getUserName(),

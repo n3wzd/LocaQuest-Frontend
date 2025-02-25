@@ -1,5 +1,6 @@
 import AchievementPopup from '@/src/components/popup/achievement-popup';
 import AttendPopup from '@/src/components/popup/attend-popup';
+import LevelPopup from '@/src/components/popup/level-popup';
 import Drawer from '@/src/components/drawer/drawer';
 import Toolbar from '@/src/components/toolbar/toolbar';
 import { Tabs } from 'expo-router';
@@ -44,6 +45,7 @@ export default function TabLayout() {
       </Tabs>
       <AttendPopup/>
       <AchievementPopup/>
+      <LevelPopup/>
     </>
   );
 }

@@ -14,7 +14,7 @@ export const startApi = async () => {
         achievementList: Achievement[],
         userAchievementList: UserAchievement[],
         userStatisticList: UserStatistic[],
-        isAttend: boolean,
+        attended: boolean,
     }
     try {
         const today = format.getToday();
@@ -36,7 +36,7 @@ export const startApi = async () => {
         useUserAchevementStore.getState().resetUserAchvMap();
         useUserStatisticStore.getState().setUserStatistic({ statDate: format.getToday(), ...statDB.sumAll() });
         useUserAchevementStore.getState().initAchvMapFromDB();
-        if(data.isAttend) {
+        if(data.attended) {
             useAttendPopupStore.getState().openPopup();
         }
         return true;

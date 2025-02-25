@@ -8,18 +8,17 @@ import useUserStatusStore from '@/src/stores/user-statistic';
 import chart from '@/src/services/chart';
 import ChoiceChips from '@/src/components/input/choice-chips';
 import GrassGrid from '@/src/components/chart/grass-grid';
-import statDB from '@/src/services/user-statistic';
 import format from '@/src/utils/date';
 
 export default () => {
   useUserStatusStore();
   const [ valueType, setValueType ] = useState<UserParamProperty>('exp');
   const [ rangeType, setRangeType ] = useState<DateRangeType>('week1');
-  const grassData = statDB.selectByRange(format.getDateFromToday(-90), format.getToday());
+  const grassData = chart.getSingleData(format.getDateFromToday(-90), format.getToday());
   const chartData = {
-    recent: chart.getRecentData(valueType),
-    avg: chart.getRangeData(valueType, 'avg', rangeType),
-    sum: chart.getRangeData(valueType, 'sum', rangeType),
+    recent: chart.getSingleChartData(valueType),
+    avg: chart.getRangeChartData(valueType, 'avg', rangeType),
+    sum: chart.getRangeChartData(valueType, 'sum', rangeType),
   }
   const valueOptions = [
     { label: '경험치', value: 'exp', icon: 'game-controller' },

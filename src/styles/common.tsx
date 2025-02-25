@@ -52,6 +52,21 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: theme.fonts.title,
     },
+    designedTitle: {
+        color: theme.colors.white,
+        fontSize: 24,
+        fontWeight: 'bold',
+        fontFamily: theme.fonts.title,
+    },
+    fancyText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: theme.colors.white,
+        textShadowColor: theme.colors.lightShadow,
+        textShadowOffset: { width: 1, height: 2 },
+        textShadowRadius: 2,
+        fontFamily: theme.fonts.title,
+    },
     overlay: {
         flex: 1,
         justifyContent: 'center',
@@ -59,21 +74,15 @@ export default StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
     },
     popup: {
+        justifyContent: 'center',
+        alignItems: 'center',
         width: 300,
-        alignItems: "center",
         backgroundColor: theme.colors.lightSpace,
         padding: 15,
         borderRadius: 10,
         boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
     },
     badgeImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        marginRight: 15,
-        marginTop: 5,
-    },
-    profileImage: {
         borderRadius: 50,
     },
   });

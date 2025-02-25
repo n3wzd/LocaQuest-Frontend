@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Chip from '@/src/components/input/chip';
+import Chip from '@/src/components/common/chip';
 import styles from "@/src/styles/common";
 
 interface ChoiceChipItem {

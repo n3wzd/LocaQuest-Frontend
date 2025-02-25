@@ -2,8 +2,8 @@ import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import Profile from '@/src/components/status/profile';
 import Level from '@/src/components/status/level';
-import BadgesList from '@/src/components/status/badge-list';
-import AchievementList from '@/src/components/status/achievement-list';
+import AchievementIconList from '@/src/components/achievement/achievement-icon-list';
+import AchievementList from '@/src/components/achievement/achievement-list';
 import useUserDataStore from '@/src/stores/user-data';
 import useUserStatusStore from '@/src/stores/user-statistic';
 import useUserAchevementStore from '@/src/stores/user-achievement';
@@ -30,7 +30,7 @@ const ProfileScreen = () => {
             <Text style={styles.boldText}>달성한 업적</Text>
             <Link href="../screens/achievement-catalog"><Text style={styles.text}>더보기</Text></Link>
           </View>
-          <BadgesList achvIdList={ userAchvList.filter(achv => achv.progress === 100).map(achv => Number(achv.achvId)) } />
+          <AchievementIconList achvIdList={ userAchvList.filter(achv => achv.progress === 100).map(achv => Number(achv.achvId)) } />
           <Text style={styles.boldText}>진행 중인 업적</Text>
           <AchievementList achievements={userAchvList.filter(achv => !achv.achievedAt).sort((a, b) => b.progress - a.progress).slice(0, 3)}/>
         </ScrollView>

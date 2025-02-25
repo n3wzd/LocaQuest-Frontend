@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import AchievementTable from "@/src/components/status/achievement-table";
+import AchievementTable from "@/src/components/achievement/achievement-table";
 import useUserAchievementStore from '@/src/stores/user-achievement';
 import styles from '@/src/styles/common';
 

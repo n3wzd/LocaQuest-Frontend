@@ -2,7 +2,23 @@ import statDB from '@/src/services/user-statistic';
 import format from '@/src/utils/date';
 import useUserStatisticStore from '@/src/stores/user-statistic';
 
-const getRecentData = (prop: UserParamProperty): ChartData => {
+const getSingleData = (startDate: string, endDate: string) => {
+    const CHART_COLUMN = 7;
+    const statList = statDB.selectByRange(startDate, endDate);
+    const todayStat = useUserStatisticStore.getState().userStatistic;
+    const sum = statDB.sumAll();
+
+    const datas = statList.map((item) => item);
+    const todayStat2 = datas.find(item => item.statDate === todayStat.statDate);
+    if(todayStat2) {
+        todayStat2.exp += todayStat.exp - sum.exp;
+        todayStat2.steps += todayStat.steps - sum.steps;
+        todayStat2.distance += todayStat.distance - sum.distance;
+    }
+    return datas;
+}
+
+const getSingleChartData = (prop: UserParamProperty): ChartData => {
     const CHART_COLUMN = 7;
     const statList = statDB.selectByRange(format.getDateFromToday(-CHART_COLUMN), format.getToday());
     const todayStat = useUserStatisticStore.getState().userStatistic;
@@ -23,7 +39,7 @@ const deltaDayMap = {
     month6: 180,
     year1: 365,
 }
-const getRangeData = (prop: UserParamProperty, valueType: RangeDataValueParam, rangeType: DateRangeType): ChartData => {
+const getRangeChartData = (prop: UserParamProperty, valueType: RangeDataValueParam, rangeType: DateRangeType): ChartData => {
     const CHART_COLUMN = 7;
     const dateSize = deltaDayMap[rangeType];
     const statList = statDB.selectByRange(format.getDateFromToday(-dateSize), format.getToday());
@@ -60,6 +76,7 @@ const getRangeData = (prop: UserParamProperty, valueType: RangeDataValueParam, r
 }
 
 export default {
-    getRecentData: getRecentData,
-    getRangeData: getRangeData,
+    getSingleData: getSingleData,
+    getSingleChartData: getSingleChartData,
+    getRangeChartData: getRangeChartData,
 }

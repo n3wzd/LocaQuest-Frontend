@@ -6,6 +6,7 @@ import tokenManager from '@/src/utils/token';
 import format from '@/src/utils/date';
 import statDB from '@/src/services/user-statistic';
 import achvDB from '@/src/services/user-achievement';
+import useLevelPopupStore from '../stores/level-popup';
 
 interface Request {
     userId: string,
@@ -35,10 +36,13 @@ ws.onerror = (error) => {
 ws.onmessage = (event) => {
     const data = JSON.parse(event.data as string) as Reponse;
     const deltaData = data.deltaParam;
-    useUserStatusStore.getState().addUserStatistic(deltaData);
+    const nextLevel = useUserStatusStore.getState().addUserStatistic(deltaData);
     useUserAchevementStore.getState().updateAchvMapProgress();
     useUserAchevementStore.getState().addAchvMapAchvDate(data.newAchvList);
     useAchievementPopupStore.getState().newAchvQueueAppend(data.newAchvList);
+    if(nextLevel > 0) {
+        useLevelPopupStore.getState().openPopup(nextLevel);
+    }
     statDB.updateAttend();
     achvDB.insertAll(data.newAchvList);
     setDistance(getDistance() - deltaData.distance);

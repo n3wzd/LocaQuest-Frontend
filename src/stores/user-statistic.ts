@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import format from '@/src/utils/date';
+import { getLevel, canLevelUp } from '@/src/utils/game';
 
 interface UserStatisticStore {
   userStatistic: UserStatistic;
   setUserStatistic: (data: UserStatistic) => void;
-  addUserStatistic: (data: UserStatistic | UserParam) => void;
+  addUserStatistic: (data: UserStatistic | UserParam) => number;
   resetUserStatistic: () => void;
 }
 
@@ -17,12 +18,15 @@ const useUserStatusStore = create<UserStatisticStore>((set, get) => ({
   },
   addUserStatistic: (param: UserStatistic | UserParam) => {
     const userStatistic = get().userStatistic;
+    const { exp, steps, distance, statDate } = userStatistic;
+    const newExp = exp + param.exp;
     set({ userStatistic: {
-      exp: userStatistic.exp + param.exp,
-      steps: userStatistic.steps + param.steps,
-      distance: userStatistic.distance + param.distance,
-      statDate: userStatistic.statDate
+      exp: newExp,
+      steps: steps + param.steps,
+      distance: distance + param.distance,
+      statDate: statDate
     }});
+    return canLevelUp(exp, newExp) ? getLevel(newExp) : 0;
   },
   resetUserStatistic: () => set({ userStatistic: makeInitData() }),
 }));

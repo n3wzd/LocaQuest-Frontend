@@ -1,28 +1,28 @@
 import axios from '../libs/axios';
+import mime from '../libs/mime';
 import storage from '../utils/token';
+import URL from '../config/url';
+import { getFileName } from './file';
 
 type ServerType = "CORE" | "ACTIVITY";
 
 interface httpParam {
     url: string, 
     params?: Record<string, any>, 
-    useToken: boolean, 
+    useToken?: boolean, 
     server: ServerType,
 }
 
 const createUrl = ( baseUrlType: ServerType, detailUrl: string ) => {
-    const API_BASE_URL = {
-        CORE: 'http://' + (process.env.EXPO_PUBLIC_SERVER_CORE_URL ?? "") + ":" + (process.env.EXPO_PUBLIC_SERVER_CORE_PORT ?? ""),
-        ACTIVITY: 'http://' + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_URL ?? "") + ":" + (process.env.EXPO_PUBLIC_SERVER_ACTIVITY_HTTP_PORT ?? "")
-    };
-    return API_BASE_URL[baseUrlType] + detailUrl;
+    return URL.API_BASE[baseUrlType] + detailUrl;
 }
 
-const createHeader = async (useToken: boolean) => 
-    useToken ? { Authorization: `Bearer ${await storage.getToken()}` } : undefined;
+const appendAuthorization = async (useToken: boolean) => useToken ? `Bearer ${await storage.getToken()}` : undefined;
 
 const request = async ({url, params = {}, useToken = false, server = "CORE", method}: httpParam & { method: 'get' | 'post' | 'put' }) => {
-    const header = await createHeader(useToken);
+    const header = {
+        Authorization: await appendAuthorization(useToken),
+    }
     const fullUrl = createUrl(server, url);
     const dto = { url: fullUrl, params: params, header: header };
     switch(method) {
@@ -44,8 +44,24 @@ const put = async (params: httpParam) => {
     return await request({ ...params, method: 'put' });
 };
 
+const upload = async ({ url, fileUri, useToken = false }: { url: string, fileUri: string, useToken?: boolean }) => {
+    const formData = new FormData();
+    formData.append('file', {
+        uri: fileUri,
+        type: mime.getType(fileUri),
+        name: getFileName(fileUri),
+    } as unknown as Blob);
+    const header = {
+        Authorization: await appendAuthorization(useToken),
+        "Content-Type": "multipart/form-data"
+    }
+    const fullUrl = createUrl("CORE", url);
+    return await axios.post({ url: fullUrl, params: formData, header: header });
+};
+
 export default {
     get: get,
     post: post,
     put: put,
+    upload: upload,
 };

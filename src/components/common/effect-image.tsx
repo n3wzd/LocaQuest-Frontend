@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Animated, Easing } from 'react-native';
-import URI from '@/src/config/uri';
+import ASSET from '@/src/config/asset';
 import RoundImage from './round-image';
 
 const RotatingOverlayImage = ({ uri, radius, onPress }: { uri: string, radius: number, onPress?: () => void }) => {
@@ -26,7 +26,7 @@ const RotatingOverlayImage = ({ uri, radius, onPress }: { uri: string, radius: n
   return (
     <View style={[styles.container, { width: glowRadius, height: glowRadius }]}>
       <Image
-        source={{ uri: URI.effect.glow }}
+        source={{ uri: ASSET.effect.glow }}
         style={[
           styles.glowImage,
           { width: glowRadius, height: glowRadius, transform: [{ rotate: `${rotation * 360}deg` }] },

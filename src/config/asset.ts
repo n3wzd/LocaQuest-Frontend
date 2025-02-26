@@ -30,14 +30,19 @@ const achievements = [
     require('@/assets/achievements/24.png'),
     require('@/assets/achievements/25.png'),
     require('@/assets/achievements/26.png'),
-];
+].map(item => getUri(item));
 
 const effect = {
     level: getUri(require('@/assets/level.png')),
     glow: getUri(require('@/assets/glow.png')),
 }
 
+const profile = {
+    default: getUri(require('@/assets/profile/default.png')),
+}
+
 export default {
-    achievements: achievements.map(item => getUri(item)),
+    achievements: achievements,
     effect: effect,
+    profile: profile,
 };

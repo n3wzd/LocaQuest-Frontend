@@ -1,7 +1,7 @@
 import db from '@/src/libs/sqlite';
 import format from '@/src/utils/date';
 import useUserStatisticStore from '@/src/stores/user-statistic';
-import useAttendPopupStore from '@/src/stores/attend-popup';
+import useAttendPopupStore from '@/src/stores/popup/attend-popup';
 
 const TABLE_NAME = 'user_statistics';
 let attendDate: string = format.getToday();

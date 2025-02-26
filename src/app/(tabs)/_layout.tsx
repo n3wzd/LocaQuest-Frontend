@@ -5,6 +5,7 @@ import Drawer from '@/src/components/drawer/drawer';
 import Toolbar from '@/src/components/toolbar/toolbar';
 import { Tabs } from 'expo-router';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProfileImagePopup from '@/src/components/popup/profile-image-popup';
 
 export default function TabLayout() {
   return (
@@ -46,6 +47,7 @@ export default function TabLayout() {
       <AttendPopup/>
       <AchievementPopup/>
       <LevelPopup/>
+      <ProfileImagePopup/>
     </>
   );
 }

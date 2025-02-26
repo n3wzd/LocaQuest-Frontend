@@ -7,6 +7,7 @@ import AchievementList from '@/src/components/achievement/achievement-list';
 import useUserDataStore from '@/src/stores/user-data';
 import useUserStatusStore from '@/src/stores/user-statistic';
 import useUserAchevementStore from '@/src/stores/user-achievement';
+import useLevelPopupStore from '@/src/stores/popup/profile-image-popup';
 import styles from '@/src/styles/common';
 import { Link } from 'expo-router';
 import InfoBlockContainer from '@/src/components/status/info-block-container';
@@ -14,14 +15,13 @@ import InfoBlockContainer from '@/src/components/status/info-block-container';
 const ProfileScreen = () => {
   const { userStatistic } = useUserStatusStore();
   const { userData } = useUserDataStore();
-  const { getUserAchvList } = useUserAchevementStore();
-  const userAchvList = getUserAchvList();
+  const userAchvList = useUserAchevementStore.getState().getUserAchvList();
 
   return (
     userStatistic ? (
       <View style={styles.screen}>
         <ScrollView contentContainerStyle={{ padding: 15 }}>
-          <Profile name={userData.name} imageUri={userData.profilePictureUri} />
+          <Profile userData={userData} onPress={useLevelPopupStore.getState().openPopup} />
           <Level exp={userStatistic.exp} />
           <View style={{ marginBottom: 20 }}>
             <InfoBlockContainer steps={userStatistic.steps} distance={userStatistic.distance}/>

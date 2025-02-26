@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import tokenManager from '@/src/utils/token';
-import { Asset } from 'expo-asset';
+import { profileImage } from '@/src/utils/server-asset';
+import ASSET from '../config/asset';
 
 interface UserDataStore {
   userData: UserData
@@ -8,13 +9,13 @@ interface UserDataStore {
 }
 
 const useUserStatusStore = create<UserDataStore>((set) => ({
-  userData: { userId: "", name: "", profilePictureUri: "" },
+  userData: { userId: "", name: "", profileUri: ASSET.profile.default },
   setUserDataFromToken: async () => {
-    const uri = Asset.fromModule(require('@/assets/achievements/0.png')).uri;
+    const userId = await tokenManager.getUserId();
     const data = {
-      userId: await tokenManager.getUserId(),
+      userId: userId,
       name: await tokenManager.getUserName(),
-      profilePictureUri: uri, 
+      profileUri: await profileImage(Number(userId)),
     }
     set({ userData: data });
   }

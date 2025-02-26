@@ -4,13 +4,13 @@ import styles from '@/src/styles/common';
 import theme from '@/src/styles/theme';
 import GAME from '@/src/config/game';
 import RoundImage from '../common/round-image';
-import URI from '@/src/config/uri';
+import ASSET from '@/src/config/asset';
 
 export default ({ achievement }: { achievement: UserAchievementListItem }) => {
   const achvId = Number(achievement.achvId);
   return (
     <View style={ listStyle.listItem }>
-      <RoundImage uri={URI.achievements[achvId]} radius={60} />
+      <RoundImage uri={ASSET.achievements[achvId]} radius={60} />
       <View style={{ margin: 6 }} />
       <View style={{ flex: 1 }}>
         <Text style={[styles.boldText, { fontSize: 14 }]}>{GAME.ACHIEVEMENT[achvId].name}</Text>

@@ -12,7 +12,7 @@ export default ({ userStatistic, userData }: { userStatistic: UserStatistic, use
     const gauge = getExpProgress(exp);
     return (
     <View style={styles.rowContainer}>
-        <Badge uri={userData.profilePictureUri} radius={45}/>
+        <Badge uri={userData.profileUri} radius={45}/>
         <View style={[styles.columnContainer, { paddingHorizontal: 10 }]}>
             <NameBox name={userData.name}/>
             <View style={styles.rowContainer}>

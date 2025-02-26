@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Modal, View } from "react-native";
 import styles from '@/src/styles/common';
-import useAttendPopupStore from '@/src/stores/attend-popup';
+import useAttendPopupStore from '@/src/stores/popup/attend-popup';
 import format from '@/src/utils/date';
 import Button from '../input/button';
 

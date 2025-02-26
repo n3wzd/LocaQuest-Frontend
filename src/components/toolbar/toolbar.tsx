@@ -8,7 +8,6 @@ import theme from '@/src/styles/theme';
 import statDB from '@/src/services/user-statistic';
 import InfoBlock from "../status/info-block";
 import ProfileBar from "../status/profile-bar";
-import useLevelPopupStore from "@/src/stores/level-popup";
 
 export default () => {
     const { userStatistic } = useUserStatusStore();

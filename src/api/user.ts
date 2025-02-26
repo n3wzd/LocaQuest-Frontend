@@ -3,13 +3,13 @@ import http from '../utils/http';
 import { Alert } from 'react-native';
 import tokenManager from '../utils/token';
 import errorHandler from '../utils/http-error-handler';
-import { encryptoRSAPassword } from '../utils/crypto';
+import useAttendPopupStore from '../stores/popup/attend-popup';
 
 export const updatePassword = async (email: string, password: string, router: Router) => {
   try {
     await http.post({
       url: "/users/update-password", 
-      params: { email: email, password: encryptoRSAPassword(password) },
+      params: { email: email, password: password },
       useToken: false,
       server: "CORE",
     });
@@ -58,7 +58,7 @@ export const login = async (email: string, password: string, router: Router) => 
   try {
     const response = await http.post({
       url: "/users/login", 
-      params: { email: email, password: encryptoRSAPassword(password) },
+      params: { email: email, password: password },
       useToken: false,
       server: "CORE",
     });
@@ -88,7 +88,7 @@ export const register = async (email: string, password: string, name: string, ro
   try {
     await http.post({
       url: "/users/register/send-auth-mail", 
-      params: { email: email, password: encryptoRSAPassword(password), name: name },
+      params: { email: email, password: password, name: name },
       useToken: false,
       server: "CORE",
     });
@@ -105,7 +105,7 @@ export const deleteUser = async (password: string, router: Router) => {
   try {
     await http.post({
       url: "/users/delete", 
-      params: { password: encryptoRSAPassword(password) },
+      params: { password: password },
       useToken: true,
       server: "CORE",
     });
@@ -117,18 +117,16 @@ export const deleteUser = async (password: string, router: Router) => {
   }
 }
 
-export const updateUser = async (password: string, name: string, router: Router) => {
+export const uploadProfileImage = async (fileUri: string) => {
   try {
-    const response = await http.post({
-      url: "/users/update", 
-      params: { password: encryptoRSAPassword(password), name: name },
+    await http.upload({
+      url: "/users/profile-image/upload", 
+      fileUri: fileUri,
       useToken: true,
-      server: "CORE",
     });
-    await tokenManager.saveToken(response.data as string);
     Alert.alert('', "수정되었습니다!");
-    router.push('/(tabs)/status');
+    useAttendPopupStore.getState().closePopup();
   } catch(error) {
-    errorHandler(error, router);
+    errorHandler(error);
   }
 }

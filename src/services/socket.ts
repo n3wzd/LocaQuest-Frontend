@@ -1,12 +1,12 @@
 import { getDistance, setDistance } from './location';
 import useUserStatusStore from '@/src/stores/user-statistic';
 import useUserAchevementStore from '@/src/stores/user-achievement';
-import useAchievementPopupStore from '@/src/stores/achievement-popup';
+import useAchievementPopupStore from '@/src/stores/popup/achievement-popup';
 import tokenManager from '@/src/utils/token';
 import format from '@/src/utils/date';
 import statDB from '@/src/services/user-statistic';
 import achvDB from '@/src/services/user-achievement';
-import useLevelPopupStore from '../stores/level-popup';
+import useLevelPopupStore from '../stores/popup/level-popup';
 
 interface Request {
     userId: string,

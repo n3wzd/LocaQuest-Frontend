@@ -3,11 +3,10 @@ import errorHandler from '../utils/http-error-handler';
 import GAME from '../config/game';
 import useUserStatisticStore from '@/src/stores/user-statistic';
 import useUserAchevementStore from '@/src/stores/user-achievement';
-import useAttendPopupStore from '@/src/stores/attend-popup';
+import useAttendPopupStore from '@/src/stores/popup/attend-popup';
 import statDB from '@/src/services/user-statistic';
 import achvDB from '@/src/services/user-achievement';
 import format from '@/src/utils/date';
-// import crypto from '../config/crypto';
 
 export const startApi = async () => {
     interface Response {
@@ -39,25 +38,6 @@ export const startApi = async () => {
         if(data.attended) {
             useAttendPopupStore.getState().openPopup();
         }
-        return true;
-    } catch(error) {
-        errorHandler(error);
-        return false;
-    }
-}
-
-export const receiveRsmPublicKey = async () => {
-    interface Response {
-        rsaPublicKey: string,
-    }
-    try {
-        const response = await http.get({
-            url: "/client/init", 
-            useToken: false,
-            server: "CORE",
-        });
-        const data: Response = response.data;
-        // crypto.init(Buffer.from(data.rsaPublicKey, 'base64'));
         return true;
     } catch(error) {
         errorHandler(error);

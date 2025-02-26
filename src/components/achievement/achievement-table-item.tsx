@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import URI from '@/src/config/uri';
+import ASSET from '@/src/config/asset';
 import ProgressBar from '../status/progress-bar';
 import styles from '@/src/styles/common';
 import theme from '@/src/styles/theme';
@@ -16,7 +16,7 @@ export default ({ achievement }: { achievement: UserAchievementListItem }) => {
       <View style={{alignItems: 'center'}}>
         <Text style={[ styles.title, { fontSize: 18 } ]}>{GAME.ACHIEVEMENT[achvId].name}</Text>
         <View style={{ margin: 15, marginBottom: 10 }}>
-          <RoundImage uri={URI.achievements[achvId]} radius={90} />
+          <RoundImage uri={ASSET.achievements[achvId]} radius={90} />
         </View>
         <Text style={{ ...styles.text, textAlign: 'center', fontSize: desc.length < 18 ? 14 : 13, marginBottom: 10 }}>{desc}</Text>
       </View>

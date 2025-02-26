@@ -30,7 +30,7 @@ declare global {
   interface UserData {
     userId: string,
     name: string,
-    profilePictureUri: string,
+    profileUri: string,
   }
 
   interface ChartDataItem {

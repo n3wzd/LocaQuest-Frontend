@@ -3,7 +3,6 @@ import http from '../utils/http';
 import { Alert } from 'react-native';
 import tokenManager from '../utils/token';
 import errorHandler from '../utils/http-error-handler';
-import useAttendPopupStore from '../stores/popup/attend-popup';
 
 export const updatePassword = async (email: string, password: string, router: Router) => {
   try {
@@ -117,15 +116,14 @@ export const deleteUser = async (password: string, router: Router) => {
   }
 }
 
-export const uploadProfileImage = async (fileUri: string) => {
+export const uploadProfileImage = async (fileUri: string, onResult: () => {}) => {
   try {
     await http.upload({
       url: "/users/profile-image/upload", 
       fileUri: fileUri,
       useToken: true,
     });
-    Alert.alert('', "수정되었습니다!");
-    useAttendPopupStore.getState().closePopup();
+    await onResult();
   } catch(error) {
     errorHandler(error);
   }

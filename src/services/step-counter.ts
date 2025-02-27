@@ -3,7 +3,7 @@ import socket from './socket';
 
 const ACC_THRESHOLD_MIN = 1.5;
 const ACC_THRESHOLD_MAX = 2.5;
-const MIN_TIME_BETWEEN_STEPS = 300;
+const MIN_TIME_BETWEEN_STEPS = 400;
 
 let stepSubscription = null;
 let lastStepTime = Date.now();

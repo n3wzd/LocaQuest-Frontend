@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import Login from '@/src/app/screens/login';
-import tokenManager from '@/src/utils/token';
-import useUserDataStore from '@/src/stores/user-data';
-import { startBackgroundLocation } from '@/src/services/location';
 import { useRouter } from 'expo-router';
 import LoadingButton from '@/src/components/input/loading-button';
 import styles from '@/src/styles/common';
-import { startStepCounter } from '@/src/services/step-counter';
-import { startApi } from '@/src/api/init';
+import initialize from '@/src/services/init';
 
 export default () => {
   const [mode, setMode] = useState(0);
   const router = useRouter();
-  const { setUserDataFromToken } = useUserDataStore();
   
   useEffect(() => {
     init();
@@ -21,22 +16,11 @@ export default () => {
 
   const init = async () => {
     setMode(0);
-    const token = await tokenManager.getToken();
-    if (token !== null) {
-      if(await startApi()) {
-        await startStepCounter();
-        const granted = await startBackgroundLocation();
-        if(granted) {
-          await setUserDataFromToken();
-          router.push('/(tabs)/quest');
-        } else {
-          setMode(2);
-        }
-      } else {
-        setMode(1);
-      }
-    } else {
-      setMode(1);
+    const res = await initialize();
+    switch(res) {
+      case 'success': router.push('/(tabs)/quest'); break;
+      case 'not-granted': setMode(2); break;
+      default: setMode(1);
     }
   };
 

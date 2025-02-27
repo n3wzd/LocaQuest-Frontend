@@ -7,7 +7,7 @@ import ToolTip from '@/src/components/popup/tooltip';
 
 const WEEKDAYS = 7;
 const TOTAL_WEEKS = 12;
-const EXP_Line = 20000;
+const EXP_Line = 5000;
 const WEEK_DATA = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];
 
 const getColor = (value: number) => {

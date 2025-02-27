@@ -51,7 +51,7 @@ ws.onmessage = (event) => {
 const send = async () => {
     const req: Request = {
         userId: await tokenManager.getUserId(),
-        distance: 1,// Math.floor(getDistance()),
+        distance: Math.floor(getDistance()),
         date: format.getToday(),
     }
     ws.send(JSON.stringify(req));

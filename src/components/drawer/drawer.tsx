@@ -19,7 +19,7 @@ const ANIMATION_DURATION = 300;
 export default () => {
     const router = useRouter();
     const { userStatistic } = useUserStatisticStore();
-    const { userData } = useUserDataStore();
+    const { userData, profileUri } = useUserDataStore();
     const { visibleDrawer, closeDrawer } = useDrawerStore();
     const animation = useSharedValue(0);
     const overlayAnimatedStyle = useAnimatedStyle(() => {
@@ -57,7 +57,7 @@ export default () => {
                             <Ionicons name="close" color={theme.colors.lightGrey} size={24} />
                         </TouchableOpacity>
                         <View style={{ width: '50%', padding: 10 }}>
-                            <ProfileBar userStatistic={userStatistic} userData={userData} ></ProfileBar>
+                            <ProfileBar userStatistic={userStatistic} userData={userData} profileUri={profileUri} ></ProfileBar>
                         </View>
                         <View style={[styles.columnContainer, { alignItems: "flex-start" }]}>
                             <DrawerItem text='프로필 변경' icon='pencil' onPress={handleProfileEdit}/>

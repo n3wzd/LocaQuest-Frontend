@@ -11,13 +11,13 @@ import ProfileBar from "../status/profile-bar";
 
 export default () => {
     const { userStatistic } = useUserStatusStore();
-    const { userData } = useUserDataStore();
+    const { userData, profileUri } = useUserDataStore();
     const { toggleDrawer } = useDrawerStore();
     const curStat = statDB.getTodayStatistic();
 
     return (
         <View style={toolbarStyles.toolbar}>
-            <ProfileBar userStatistic={userStatistic} userData={userData} ></ProfileBar>
+            <ProfileBar userStatistic={userStatistic} userData={userData} profileUri={profileUri} ></ProfileBar>
             <InfoBlock title="걸음수" value={curStat.steps}/>
             <InfoBlock title="이동거리" value={`${curStat.distance}m`}/>
             <TouchableOpacity onPress={toggleDrawer}>

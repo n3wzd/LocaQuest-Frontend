@@ -7,16 +7,16 @@ import LoadingButton from '../input/loading-button';
 import RoundImage from "../common/round-image";
 import imagePicker from "@/src/utils/image-picker";
 import { uploadProfileImage } from '@/src/api/user';
-import { syncProfileImage } from '@/src/utils/server-asset';
+import { profileImage } from "@/src/utils/server-asset";
 
 export default () => {
   const { visiblePopup, closePopup } = useProFileImagePopupStore();
-  const { userData } = useUserDataStore();
+  const { userData, profileUri, setProfileUri } = useUserDataStore();
   const [imageUri, setImageUri] = useState<string | null>(null);
 
   useEffect(() => {
     if(visiblePopup) {
-      setImageUri(userData.profileUri);
+      setImageUri(profileUri);
     }
   },[visiblePopup])
 
@@ -26,10 +26,11 @@ export default () => {
   }
   const onUpload = async () => {
     if(imageUri) {
-      await uploadProfileImage(imageUri);
-      await syncProfileImage(Number(userData.userId));
-      Alert.alert('', "변경되었습니다.");
-      closePopup();
+      await uploadProfileImage(imageUri, async () => {
+        setProfileUri(await profileImage(Number(userData.userId)));
+        Alert.alert('', "수정되었습니다!");
+        closePopup();
+      });
     } else {
       Alert.alert('', "이미지가 존재하지 않습니다.");
     }

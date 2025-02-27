@@ -14,14 +14,14 @@ import InfoBlockContainer from '@/src/components/status/info-block-container';
 
 const ProfileScreen = () => {
   const { userStatistic } = useUserStatusStore();
-  const { userData } = useUserDataStore();
+  const { userData, profileUri } = useUserDataStore();
   const userAchvList = useUserAchevementStore.getState().getUserAchvList();
-
+  
   return (
     userStatistic ? (
       <View style={styles.screen}>
         <ScrollView contentContainerStyle={{ padding: 15 }}>
-          <Profile userData={userData} onPress={useLevelPopupStore.getState().openPopup} />
+          <Profile userData={userData} profileUri={profileUri} onPress={useLevelPopupStore.getState().openPopup} />
           <Level exp={userStatistic.exp} />
           <View style={{ marginBottom: 20 }}>
             <InfoBlockContainer steps={userStatistic.steps} distance={userStatistic.distance}/>

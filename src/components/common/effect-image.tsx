@@ -6,7 +6,7 @@ import RoundImage from './round-image';
 const RotatingOverlayImage = ({ uri, radius, onPress }: { uri: string, radius: number, onPress?: () => void }) => {
   const [ rotation, setRotation ] = useState<number>(0);
   const rotationAnimation = new Animated.Value(0);
-  const glowRadius = radius * 1.5;
+  const glowRadius = radius * 1.75;
 
   useEffect(() => {
     const listenerId = rotationAnimation.addListener((item) => {
@@ -29,7 +29,7 @@ const RotatingOverlayImage = ({ uri, radius, onPress }: { uri: string, radius: n
         source={{ uri: ASSET.effect.glow }}
         style={[
           styles.glowImage,
-          { width: glowRadius, height: glowRadius, transform: [{ rotate: `${rotation * 360}deg` }] },
+          { width: glowRadius, height: glowRadius, opacity: 0.5,  transform: [{ rotate: `${rotation * 360}deg` }] },
         ]}
       />
       <RoundImage uri={uri} radius={radius} onPress={onPress} />

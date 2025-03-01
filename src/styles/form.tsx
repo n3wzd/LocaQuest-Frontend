@@ -20,6 +20,9 @@ export default StyleSheet.create({
     ...common.text,
     color: theme.colors.lightGrey
   },
+  designedTitle: {
+    ...common.designedTitle,
+  },
   input: {
     height: 50,
     borderColor: theme.colors.darkCyan,
@@ -36,6 +39,15 @@ export default StyleSheet.create({
   },
   button: {
     backgroundColor: theme.colors.darkCyan,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonLine: {
+    backgroundColor: theme.colors.transparent,
+    borderColor: theme.colors.darkCyan,
+    borderWidth: 1.5,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

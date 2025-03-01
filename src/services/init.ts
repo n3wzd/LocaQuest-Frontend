@@ -7,7 +7,7 @@ import useUserDataStore from '@/src/stores/user-data';
 
 type MSG = 'success' | 'not-granted' | 'error';
 
-const init = async () => {
+const init = async (): Promise<MSG> => {
     const userDataState = useUserDataStore.getState();
     const token = await tokenManager.getToken();
     if (token) {
@@ -16,7 +16,6 @@ const init = async () => {
             userId: userId,
             name: await tokenManager.getUserName(),
         }
-        userDataState.setUserData(userData);
         userDataState.setUserData(userData);
         userDataState.setProfileUri(await profileImage(Number(userId)));
         if(await startApi()) {

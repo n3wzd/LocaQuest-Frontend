@@ -6,13 +6,22 @@ import Toolbar from '@/src/components/toolbar/toolbar';
 import { Tabs } from 'expo-router';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProfileImagePopup from '@/src/components/popup/profile-image-popup';
+import theme from '@/src/styles/theme';
 
 export default function TabLayout() {
   return (
     <>
       <Drawer/>
       <Toolbar/>
-      <Tabs>
+      <Tabs
+        screenOptions={{
+          tabBarStyle: { backgroundColor: theme.colors.darkSpace, height: 60 },
+          tabBarActiveTintColor: theme.colors.lightCyan,
+          tabBarInactiveTintColor: theme.colors.grey,
+          tabBarLabelStyle: { fontSize: 13 },
+          tabBarActiveBackgroundColor: theme.colors.lightSpace,
+        }}
+      >
         <Tabs.Screen
           name="quest"
           options={{

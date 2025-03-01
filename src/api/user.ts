@@ -3,6 +3,7 @@ import http from '../utils/http';
 import { Alert } from 'react-native';
 import tokenManager from '../utils/token';
 import errorHandler from '../utils/http-error-handler';
+import useUserDataStore from '@/src/stores/user-data';
 
 export const updatePassword = async (email: string, password: string, router: Router) => {
   try {
@@ -116,6 +117,27 @@ export const deleteUser = async (password: string, router: Router) => {
   }
 }
 
+export const updateUser = async (password: string, name: string, router: Router) => {
+  try {
+    const response = await http.post({
+      url: "/users/update", 
+      params: { password: password, name: name },
+      useToken: true,
+      server: "CORE",
+    });
+    await tokenManager.saveToken(response.data as string);
+    const userData: UserData = {
+      userId: await tokenManager.getUserId(),
+      name: await tokenManager.getUserName(),
+    }
+    useUserDataStore.getState().setUserData(userData);
+    Alert.alert('', "수정되었습니다!");
+    router.push('/(tabs)/status');
+  } catch(error) {
+    errorHandler(error, router);
+  }
+}
+
 export const uploadProfileImage = async (fileUri: string, onResult: () => {}) => {
   try {
     await http.upload({
@@ -124,6 +146,19 @@ export const uploadProfileImage = async (fileUri: string, onResult: () => {}) =>
       useToken: true,
     });
     await onResult();
+  } catch(error) {
+    errorHandler(error);
+  }
+}
+
+export const deleteProfileImage = async () => {
+  try {
+    await http.post({
+      url: "/users/profile-image/delete", 
+      useToken: true,
+      server: "CORE"
+    });
+    Alert.alert('', "초기화 완료!");
   } catch(error) {
     errorHandler(error);
   }

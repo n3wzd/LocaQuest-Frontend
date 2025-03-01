@@ -15,7 +15,7 @@ const cardStyles = StyleSheet.create({
     namecard: {
         backgroundColor: theme.colors.lightCyanLevel[5], 
         padding: 3, 
-        borderRadius: 10,
+        borderRadius: 5,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',

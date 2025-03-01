@@ -8,8 +8,10 @@ export default ({ achvIdList }: { achvIdList: number[] }) => {
   return (
     <View style={{ ...styles.container, alignItems: 'flex-start' }}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {achvIdList.map((achvId) => (
-          <RoundImage key={achvId} uri={ASSET.achievements[achvId]} />
+        {achvIdList.map((achvId, idx) => (
+          <View key={idx} style={{ paddingRight: 10 }}>
+            <RoundImage uri={ASSET.achievements[achvId]} radius={60} />
+          </View>
         ))}
       </ScrollView>
     </View>

@@ -40,7 +40,7 @@ export default ({ chartData }: { chartData: ChartData }) => {
             }}
             style={{
                 width: width,
-                paddingRight: 55
+                paddingRight: 60
             }}
             bezier
         />

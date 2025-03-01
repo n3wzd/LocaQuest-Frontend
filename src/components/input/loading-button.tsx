@@ -6,11 +6,12 @@ import theme from '@/src/styles/theme';
 interface LoadingButtonProps {
   onPress: () => Promise<void>;
   title: string;
+  lineStyle?: boolean;
   style?: object; 
   disabledStyle?: object;
 }
 
-const LoadingButton: React.FC<LoadingButtonProps> = ({ onPress, title, style, disabledStyle }) => {
+const LoadingButton: React.FC<LoadingButtonProps> = ({ onPress, title, lineStyle = false, style, disabledStyle }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handlePress = async () => {
@@ -26,10 +27,10 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({ onPress, title, style, di
   return (
     <TouchableOpacity
       onPress={handlePress}
-      style={[styles.button, style, isLoading && (disabledStyle || styles.disabledButton)]}
+      style={[lineStyle ? styles.buttonLine : styles.button, style, isLoading && (disabledStyle || styles.disabledButton)]}
       disabled={isLoading}
     >
-      {isLoading ? <ActivityIndicator color={theme.colors.white} /> : <Text style={styles.text}>{title}</Text>}
+      {isLoading ? <ActivityIndicator color={theme.colors.white} /> : <Text style={[styles.text, {paddingHorizontal: 10}]}>{title}</Text>}
     </TouchableOpacity>
   );
 };

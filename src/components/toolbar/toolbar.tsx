@@ -21,7 +21,7 @@ export default () => {
             <InfoBlock title="걸음수" value={curStat.steps}/>
             <InfoBlock title="이동거리" value={`${curStat.distance}m`}/>
             <TouchableOpacity onPress={toggleDrawer}>
-                <Ionicons name="settings" size={28} color={theme.colors.lightCyan} />
+                <Ionicons name="settings" size={28} color={theme.colors.lightGrey} />
             </TouchableOpacity>
         </View>
     );

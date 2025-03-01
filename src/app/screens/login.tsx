@@ -22,6 +22,7 @@ export default function LoginPage() {
 
   return (
     <View style={styles.screen}>
+      <Text style={styles.designedTitle}>LocaQuest</Text>
       <View style={styles.container}>
         <Text style={styles.title}>Login</Text>
         <EmailInput value={email} onChangeText={setEmail} />

@@ -24,13 +24,13 @@ export default () => {
   const router = useRouter();
 
   const onSubmit = async (data: FormData) => {
-    updateUser(data.password, data.name, router);
+    await updateUser(data.password, data.name, router);
   };
 
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <Text style={[styles.title, { marginBottom: 10 }]}>회원정보 수정</Text>
+        <Text style={[styles.title, { marginBottom: 10 }]}>정보 수정</Text>
         <PasswordInput control={control} errors={errors} watch={watch}/>
         <NameInput control={control} errors={errors}/>
         <LoadingButton title="수정" onPress={handleSubmit(onSubmit)} />

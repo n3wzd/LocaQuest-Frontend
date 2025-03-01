@@ -83,6 +83,6 @@ export default StyleSheet.create({
         boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
     },
     badgeImage: {
-        borderRadius: 50,
+        borderRadius: 100,
     },
   });

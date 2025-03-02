@@ -35,6 +35,7 @@
 ## Stack
 - **React Native**
 - **Typescript**
+- **SQLite**
 
 ## Structure
 ```

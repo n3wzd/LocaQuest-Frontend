@@ -7,7 +7,6 @@ export const profileImage = async (userId: number) => {
   const uri = getUri(userId);
   try {
     const response = await fetch(uri, { method: 'HEAD' });
-    console.log(response);
     return response.ok ? uri : ASSET.profile.default;
   } catch {
     return ASSET.profile.default;

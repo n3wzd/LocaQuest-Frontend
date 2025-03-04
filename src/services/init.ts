@@ -1,5 +1,5 @@
 import tokenManager from '@/src/utils/token';
-import { startBackgroundLocation } from '@/src/services/location';
+import { startLocationSearch } from '@/src/services/location';
 import { startStepCounter } from '@/src/services/step-counter';
 import { startApi } from '@/src/api/init';
 import { profileImage } from '../utils/server-asset';
@@ -20,7 +20,7 @@ const init = async (): Promise<MSG> => {
         userDataState.setProfileUri(await profileImage(Number(userId)));
         if(await startApi()) {
             await startStepCounter();
-            const granted = await startBackgroundLocation();
+            const granted = await startLocationSearch();
             if(granted) {
                 return 'success';
             } else {

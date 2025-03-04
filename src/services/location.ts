@@ -1,5 +1,4 @@
 import * as Location from 'expo-location';
-import * as TaskManager from 'expo-task-manager';
 import { calculateDistance } from '../utils/location';
 
 let location: Location.LocationObject | null = null;
@@ -18,41 +17,9 @@ const setDistance = (dist: number) => {
   distance = dist;
 }
 
-/* ============ Background Task =============
-const DISTANCE_COUNTER_KEY = "distance-couter";
-const LOCATION_TASK_NAME = "background-location-task";
-
-TaskManager.defineTask(LOCATION_TASK_NAME, async (taskData) => {
-    const { data, error } = taskData as TaskManager.TaskManagerTaskBody<{locations: Location.LocationObject[];}>;
-    if (error) {
-      console.error("위치 업데이트 오류:", error);
-      return;
-    }
-    for(const location of data.locations) {
-        updateLocation(location);
-    }
-});
-
-const startBackgroundLocation = async () => {
-    const { status } = await Location.requestBackgroundPermissionsAsync();
-    console.log(status);
-    if (status !== "granted") {
-        return false;
-    }
-    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-      accuracy: Location.Accuracy.Lowest,
-      timeInterval: 5000,
-      distanceInterval: 10,
-      deferredUpdatesInterval: 60000,
-    });
-    return true;
-};
-*/
-
-///////////// TEST: Foreground TASK ///////////////
 let locationSubscription: Location.LocationSubscription | null = null;
 
-const startBackgroundLocation = async () => {
+const startLocationSearch = async () => {
   distance = 0;
   const { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== 'granted') {
@@ -72,6 +39,5 @@ const startBackgroundLocation = async () => {
   );
   return true;
 };
-//////////////////////////////////
 
-export { startBackgroundLocation, location, getDistance, setDistance };
+export { startLocationSearch, location, getDistance, setDistance };
